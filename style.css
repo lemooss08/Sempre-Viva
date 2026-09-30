@@ -1,0 +1,5466 @@
+/* ============================================================
+   RESET GLOBAL
+   ============================================================ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+a,
+a:visited {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* ============================================================
+   CORPO DA PÁGINA
+   ============================================================ */
+body {
+  font-family: "Montserrat", sans-serif;
+  background: #fff6e5;
+  color: #222;
+  line-height: 1.7;
+  font-size: 18px;
+  transition:
+    background 0.3s ease,
+    color 0.3s ease;
+}
+
+/* ============================================================
+   CONTAINER
+   ============================================================ */
+.container {
+  width: 90%;
+  max-width: 1100px;
+  margin: auto;
+}
+
+/* ============================================================
+   ELEMENTOS ESPECÍFICOS (SELO E ODS)
+   ============================================================ */
+.selo-sempreviva {
+  display: flex;
+  width: 100%;
+  margin-top: 30px;
+}
+
+.selo-sempreviva img {
+  width: 100%;
+  max-width: 750px;
+  border-radius: 8px;
+  align-content: center;
+  margin-left: auto;
+  margin-right: auto;
+  transition: transform 0.2s ease;
+}
+
+.selo-sempreviva img:hover {
+  transform: scale(1.02);
+}
+
+/* ============================================================
+   ODS — CARDS 3D FLIP COM ENTRADA EM CASCATA
+   ============================================================ */
+.ods-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 40px;
+  width: 100%;
+  justify-content: center;
+}
+
+.ods-break {
+  width: 100%;
+  flex-basis: 100%;
+  height: 0;
+}
+
+@keyframes odsEntrada {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.85);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.ods-card {
+  width: 143px;
+  height: 143px;
+  perspective: 700px;
+  cursor: pointer;
+  opacity: 0;
+  animation: odsEntrada 0.5s ease forwards;
+  animation-delay: calc(var(--i) * 0.07s);
+}
+
+.ods-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 14px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+}
+
+.ods-card:hover .ods-card-inner {
+  transform: rotateY(180deg);
+}
+
+.ods-card-front,
+.ods-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 14px;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  overflow: hidden;
+}
+
+.ods-card-front img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 14px;
+  transition: transform 0.3s ease;
+}
+
+.ods-card:hover .ods-card-front img {
+  transform: scale(1.05);
+}
+
+.ods-card-back {
+  background: linear-gradient(135deg, #1abc9c, #16a085);
+  transform: rotateY(180deg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px;
+  text-align: center;
+}
+
+.ods-num {
+  font-size: 28px;
+  font-weight: 800;
+  color: rgba(255, 255, 255, 0.3);
+  line-height: 1;
+  font-family: "Montserrat", sans-serif;
+}
+
+.ods-desc {
+  font-size: 11px;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.3;
+  font-family: "Montserrat", sans-serif;
+  letter-spacing: 0.02em;
+}
+
+/* ============================================================
+   SOBRE NÓS — Layout lado a lado
+   ============================================================ */
+.sobre-layout {
+  display: flex;
+  align-items: center;
+  gap: 48px;
+  flex-direction: row-reverse;
+}
+
+.sobre-img {
+  width: 60%;
+  border-radius: 8px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.sobre-texto {
+  flex: 1;
+}
+
+/* ============================================================
+   NAVBAR
+   ============================================================ */
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 70px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  border-bottom: 1px solid #eee;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  transition: background 0.3s;
+}
+
+nav.menu-open {
+  background: rgba(255, 255, 255, 1);
+}
+
+.nav-inner {
+  width: 100%;
+  max-width: 1100px;
+  display: flex;
+  align-items: center;
+  padding: 0 22px;
+  position: relative;
+}
+
+.logo {
+  font-size: 26px;
+  font-weight: 700;
+  color: #1abc9c !important;
+  opacity: 1 !important;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.nav-logo-img {
+  width: 69px;
+  height: 69px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.nav-center {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  list-style: none;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.nav-spacer {
+  flex: 0 0 200px;
+}
+
+.nav-item {
+  position: relative;
+  list-style: none;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  height: 70px;
+  padding: 0 14px;
+  font-size: 1.1rem;
+  font-family: "Montserrat", sans-serif;
+  color: #333;
+  text-decoration: none;
+  white-space: nowrap;
+  opacity: 0.8;
+  transition:
+    opacity 0.2s,
+    color 0.2s;
+  cursor: pointer;
+  user-select: none;
+  border: none;
+  background: none;
+}
+
+.nav-link:hover {
+  opacity: 1;
+  color: #2ecc71 !important;
+}
+
+.nav-link-btn {
+  background: linear-gradient(135deg, #1abc9c, #2ecc71);
+  color: white;
+  padding: 8px 20px !important;
+  border-radius: 20px;
+  height: auto !important;
+  margin-left: 8px;
+  font-size: 16px;
+}
+
+.nav-link.nav-link-btn:hover {
+  color: #2ecc71 !important;
+  background: transparent !important;
+  opacity: 1 !important;
+}
+
+.hero-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 28px;
+}
+
+.hero-donate {
+  border: none;
+  border-radius: 28px;
+  padding: 14px 30px;
+  background: linear-gradient(135deg, #1abc9c, #2ecc71);
+  color: #fff;
+  font-family: "Montserrat", sans-serif;
+  font-size: 17px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 8px 22px rgba(26, 188, 156, 0.35);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.hero-donate:hover {
+  transform: translateY(-3px);
+  opacity: 0.92;
+  box-shadow: 0 11px 26px rgba(26, 188, 156, 0.45);
+}
+
+.hero-donate:focus-visible {
+  outline: 3px solid rgba(255, 255, 255, 0.9);
+  outline-offset: 4px;
+}
+
+/* ============================================================
+   DROPDOWN
+   ============================================================ */
+.user-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.user-btn {
+  background: none;
+  border: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  color: #1abc9c !important;
+  opacity: 1 !important;
+}
+
+.user-btn .arrow {
+  font-size: 10px;
+  transition: transform 0.3s;
+}
+
+.user-dropdown.active .arrow {
+  transform: rotate(180deg);
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  right: 0;
+  background-color: #fff;
+  min-width: 180px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  z-index: 1001;
+  overflow: hidden;
+  border: 1px solid #eee;
+  margin-top: 5px;
+  animation: slideInDown 0.2s ease;
+}
+
+@keyframes slideInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dropdown-content.show {
+  display: block;
+}
+
+.dropdown-content a {
+  color: #333;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  font-size: 14px;
+  transition: background 0.2s;
+}
+
+.dropdown-content a:hover {
+  background-color: #f8f9fa;
+  color: #2ecc71 !important;
+}
+
+/* ============================================================
+   OVERLAY
+   ============================================================ */
+.overlay {
+  position: fixed;
+  top: 70px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.3);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+  z-index: 999;
+  backdrop-filter: blur(2px);
+}
+
+.overlay.visible,
+.overlay.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* ============================================================
+   MEGA MENU
+   ============================================================ */
+.mega-menu {
+  position: fixed;
+  top: 70px;
+  left: 0;
+  right: 0;
+  background: #fff;
+  padding: 30px 0 40px;
+  z-index: 1000;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(-6px);
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
+  border-bottom: 1px solid #eee;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.mega-menu.visible,
+.mega-menu.active {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: all;
+}
+
+.mega-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 22px;
+  display: flex;
+  gap: 80px;
+}
+
+.mega-col h4 {
+  font-size: 12px;
+  font-weight: 600;
+  color: #6e6e73;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  font-family: "Montserrat", sans-serif;
+  border-left: 3px solid #1abc9c;
+  padding-left: 10px;
+}
+
+.mega-col ul {
+  list-style: none;
+}
+.mega-col ul li {
+  margin-bottom: 10px;
+}
+
+.mega-col ul li a {
+  font-size: 20px;
+  font-weight: 600;
+  color: #1d1d1f;
+  text-decoration: none;
+  transition: color 0.15s;
+  font-family: "Montserrat", sans-serif;
+}
+
+.mega-col ul li a:hover {
+  color: #2ecc71 !important;
+}
+
+.mega-col.small {
+  flex: 0.8;
+}
+
+.mega-col.small ul li a {
+  font-size: 15px;
+  font-weight: 400;
+}
+
+.mega-col h4 a {
+  font-size: 12px;
+  font-weight: 600;
+  color: #6e6e73;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.mega-col h4 a:hover {
+  color: #2ecc71 !important;
+}
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background:
+    linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url("hero.png.jpeg") no-repeat center center/cover;
+  color: white;
+  padding-top: 70px;
+}
+
+.hero h1 {
+  font-size: 52px;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.hero p {
+  font-size: 20px;
+}
+
+.hero p.subtitle {
+  font-size: 20px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.highlight {
+  color: #1abc9c;
+  position: relative;
+}
+
+/* ============================================================
+   SEÇÕES GERAIS
+   ============================================================ */
+.section {
+  padding: 40px 0;
+  border-bottom: 1px solid #f9f9f9;
+  min-height: unset;
+}
+
+.section-tooltip {
+  margin-bottom: 40px;
+}
+
+.section h2 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #1abc9c;
+  position: relative;
+  display: inline-block;
+  padding-bottom: 10px;
+  border-left: 5px solid #2ecc71;
+  text-align: left;
+}
+
+section[id] {
+  scroll-margin-top: 75px;
+}
+
+#sobre p {
+  font-size: 17px;
+  line-height: 1.9;
+  text-align: justify;
+  margin-top: 24px;
+  color: #444;
+}
+
+p {
+  line-height: 1.6;
+  margin-bottom: 15px;
+}
+
+.highlight-text {
+  color: #1abc9c;
+  font-weight: 500;
+}
+
+/* ============================================================
+   CARROSSEL DE ENTREVISTAS
+   ============================================================ */
+.entrevistas-wrapper {
+  position: relative;
+  margin-top: 30px;
+}
+
+.entrevistas-viewport {
+  overflow: hidden;
+  width: 100%;
+}
+
+.entrevistas-track {
+  display: flex;
+  gap: 0;
+  transition: transform 0.4s ease;
+  will-change: transform;
+}
+
+.entrevistas-track .card-entrevista {
+  flex-shrink: 0;
+}
+
+.entrevistas-nav {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.entrevistas-btn {
+  background: linear-gradient(135deg, #1abc9c, #2ecc71);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  font-size: 26px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    opacity 0.2s,
+    transform 0.2s;
+  box-shadow: 0 4px 12px rgba(26, 188, 156, 0.35);
+}
+
+.entrevistas-btn:hover {
+  opacity: 0.85;
+  transform: scale(1.08);
+}
+
+.entrevistas-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.card-entrevista {
+  background: #ffffff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease;
+}
+
+.card-entrevista:hover {
+  transform: translateY(-5px);
+}
+
+.card-entrevista img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16/9;
+  object-fit: cover;
+  display: block;
+}
+
+.link-titulo {
+  display: block;
+  padding: 20px;
+  font-weight: 600;
+  font-size: 16px;
+  color: inherit;
+  transition: color 0.2s ease;
+}
+
+.link-titulo:hover {
+  color: #1abc9c;
+}
+
+.card-thumb {
+  position: relative;
+}
+
+.btn-play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  font-size: 28px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+
+.btn-play:hover {
+  background: rgba(26, 188, 156, 0.85);
+}
+
+.card-descricao {
+  padding: 0 20px 0;
+  font-size: 14px;
+  color: #666;
+  line-height: 1.5;
+  max-height: 0px;
+  overflow: hidden;
+  transition: max-height 0.4s ease;
+}
+
+.card-descricao.expanded {
+  max-height: 400px;
+}
+
+.btn-saiba-mais {
+  display: block;
+  margin: 8px 20px 16px;
+  background: none;
+  border: none;
+  color: #1abc9c;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: "Montserrat", sans-serif;
+  cursor: pointer;
+  padding: 0;
+  text-align: left;
+  transition: color 0.2s;
+}
+
+.btn-saiba-mais:hover {
+  color: #16a085;
+}
+
+body.dark-mode .btn-saiba-mais {
+  color: #1abc9c;
+}
+
+/* ============================================================
+   TABELAS
+   ============================================================ */
+.tabela-wrapper {
+  overflow-x: auto;
+  margin-top: 30px;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 16px;
+  text-align: left;
+}
+
+thead {
+  background: linear-gradient(135deg, #1abc9c, #2ecc71);
+  color: white;
+}
+
+thead th {
+  padding: 16px 20px;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+}
+
+tbody tr {
+  border-bottom: 1px solid #e8e8e8;
+  transition: background 0.2s;
+}
+
+tbody tr:last-child {
+  border-bottom: none;
+}
+
+tbody tr:hover {
+  background: #f0fdf8;
+}
+
+tbody td {
+  padding: 16px 20px;
+  font-size: 15px;
+  color: #333;
+  vertical-align: top;
+}
+
+tbody td:first-child {
+  font-weight: 600;
+  color: #1abc9c;
+  white-space: nowrap;
+  width: 220px;
+}
+
+/* ============================================================
+   FORMULÁRIO DE CONTATO
+   ============================================================ */
+.contact-layout {
+  display: flex;
+  gap: 30px;
+  align-items: stretch;
+  flex-wrap: wrap;
+  text-align: left;
+  margin-top: 30px;
+}
+
+#form {
+  flex: 1 1 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+#form input,
+#form textarea {
+  padding: 15px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-family: "Montserrat", sans-serif;
+  font-size: 16px;
+  width: 100%;
+  background: #fff;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+#form input:focus,
+#form textarea:focus {
+  border-color: #1abc9c;
+}
+
+#form textarea {
+  height: 200px;
+  resize: none;
+}
+
+form input,
+form textarea {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-family: "Montserrat", sans-serif;
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+form input:focus,
+form textarea:focus {
+  border-color: #1abc9c;
+}
+
+form textarea {
+  height: 150px;
+  resize: vertical;
+}
+
+.btn {
+  background: linear-gradient(135deg, #1abc9c, #2ecc71);
+  color: white;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 25px;
+  cursor: pointer;
+  font-family: "Montserrat", sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  align-self: flex-start;
+  transition: transform 0.2s;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  opacity: 0.9;
+}
+
+/* ============================================================
+   INFORMAÇÕES DE CONTATO
+   ============================================================ */
+.info-contato {
+  flex: 0 1 350px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 0;
+}
+
+.info-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  background: #f8fffe;
+  border: 1px solid #d4f5ec;
+  border-radius: 12px;
+  padding: 15px 20px;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 10px rgba(26, 188, 156, 0.08);
+}
+
+.info-item:hover {
+  transform: translateX(5px);
+  border-color: #1abc9c;
+}
+
+.info-item a {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333 !important;
+}
+
+.icon-img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.mapa {
+  margin-top: 20px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.donation-cta {
+  margin-top: 32px;
+  padding: 28px 30px;
+  text-align: center;
+  background: linear-gradient(
+    135deg,
+    rgba(26, 188, 156, 0.12),
+    rgba(46, 204, 113, 0.12)
+  );
+  border: 1px solid rgba(26, 188, 156, 0.28);
+  border-radius: 16px;
+}
+
+.donation-cta h3 {
+  color: #1abc9c;
+  font-size: 1.45rem;
+  margin-bottom: 6px;
+}
+
+.donation-cta p {
+  margin-bottom: 18px;
+  font-size: 16px;
+}
+
+/* ============================================================
+   ANIMAÇÕES DE SURGIMENTO (REVEAL)
+   ============================================================ */
+.reveal {
+  opacity: 0;
+  transform: translateY(25px);
+  transition: 0.6s;
+}
+
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-delay-1 {
+  transition-delay: 0.2s;
+}
+
+/* ============================================================
+   RODAPÉ
+   ============================================================ */
+footer {
+  text-align: center;
+  padding: 30px 0;
+  background: #222;
+  color: #888;
+  font-size: 15px;
+}
+
+/* ============================================================
+   BOTÃO DE TEMA
+   ============================================================ */
+#themeBtn {
+  background: linear-gradient(135deg, #1abc9c, #2ecc71);
+  color: white;
+  border: none;
+  padding: 8px 18px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-family: "Montserrat", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.3s;
+  box-shadow: 0 4px 15px rgba(26, 188, 156, 0.3);
+}
+
+#themeBtn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(26, 188, 156, 0.4);
+}
+
+/* ============================================================
+   MODAIS
+   ============================================================ */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 2000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  animation: fadeIn 0.3s;
+}
+
+.modal.active {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 15px;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  animation: slideIn 0.3s;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.close:hover {
+  color: #000;
+}
+
+.modal-content h2 {
+  border: none;
+  text-align: center;
+  margin-bottom: 20px;
+  color: #1abc9c;
+}
+
+.modal-tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #eee;
+}
+
+.tab-btn {
+  padding: 10px 20px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-family: "Montserrat", sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: #999;
+  transition: all 0.2s;
+  border-bottom: 3px solid transparent;
+  margin-bottom: -2px;
+}
+
+.tab-btn.active {
+  color: #1abc9c;
+  border-bottom-color: #1abc9c;
+}
+
+.tab-content {
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+.modal-content form {
+  gap: 15px;
+}
+
+.donation-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.donation-form label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: -8px;
+}
+
+.modal-intro {
+  text-align: center;
+  color: #666;
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+.modal-content input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: "Montserrat", sans-serif;
+  -webkit-tap-highlight-color: transparent;
+  caret-color: #1abc9c;
+}
+
+.modal-content input::selection,
+.modal-content textarea::selection {
+  background: transparent;
+  color: inherit;
+}
+
+.modal-content input:focus,
+.modal-content input:focus-visible,
+.modal-content textarea:focus,
+.modal-content textarea:focus-visible {
+  outline: none;
+  border-color: #1abc9c;
+  box-shadow: none;
+  background: #fff;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn-modal {
+  background: linear-gradient(135deg, #1abc9c, #2ecc71);
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: "Montserrat", sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  transition: opacity 0.2s;
+}
+
+.btn-modal:hover {
+  opacity: 0.9;
+}
+
+/* ============================================================
+   NOTIFICAÇÕES TOAST
+   ============================================================ */
+#notification-container,
+.notification-container {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  pointer-events: none;
+}
+
+.toast {
+  background: white;
+  color: #333;
+  padding: 15px 25px;
+  border-radius: 50px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 300px;
+  max-width: 450px;
+  pointer-events: all;
+  animation: toastIn 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+  border-left: 5px solid #1abc9c;
+  font-family: "Montserrat", sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.toast.success {
+  background: #2ecc71;
+  color: #fff;
+  border-left-color: #27ae60;
+}
+.toast.error {
+  background: #e74c3c;
+  color: #fff;
+  border-left-color: #c0392b;
+}
+.toast.info {
+  background: #3498db;
+  color: #fff;
+  border-left-color: #2980b9;
+}
+
+.toast.fade-out {
+  animation: fadeOutRight 0.5s ease forwards;
+}
+
+@keyframes toastIn {
+  from {
+    opacity: 0;
+    transform: translateX(100%) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOutRight {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+/* ============================================================
+   PILARES — ABAS E CARDS
+   ============================================================ */
+.pilares-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 28px;
+  flex-wrap: wrap;
+}
+
+.pilar-tab {
+  background: #f1f1f1;
+  border: none;
+  padding: 8px 20px;
+  border-radius: 30px;
+  cursor: pointer;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
+  font-size: 15px;
+  transition: all 0.3s ease;
+}
+
+.pilar-tab.active,
+.pilar-tab:hover {
+  background: #1abc9c;
+  color: white;
+  box-shadow: 0 4px 10px rgba(26, 188, 156, 0.3);
+}
+
+.pilar-content {
+  display: none;
+}
+
+.pilar-content.active {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
+  gap: 18px;
+}
+
+.iniciativa-card {
+  background: #fff;
+  padding: 18px 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  border-top: 4px solid #1abc9c;
+  transition: transform 0.3s ease;
+}
+
+.iniciativa-card:hover {
+  transform: translateY(-5px);
+}
+
+.iniciativa-card-destaque {
+  background: linear-gradient(135deg, #f0fdf9, #e8faf5);
+  border-top-color: #2ecc71;
+}
+
+.iniciativa-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
+
+.iniciativa-header h3 {
+  font-size: 17px;
+  color: #333;
+}
+
+.ods-badges {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.ods-badges img {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.iniciativa-card p {
+  font-size: 14px;
+  line-height: 1.55;
+  margin-bottom: 8px;
+}
+
+.compromissos-lista {
+  list-style: none;
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 14px;
+}
+
+/* ============================================================
+   MODO ESCURO
+   ============================================================ */
+.nav-actions {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.dark-mode-toggle {
+  position: static !important;
+  top: auto !important;
+  bottom: auto !important;
+  right: auto !important;
+  z-index: 10000;
+  background: #ffffff;
+  border: 1px solid #1abc9c;
+  color: #1abc9c;
+  padding: 10px 16px;
+  border-radius: 30px;
+  cursor: pointer;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
+  font-size: 0.85rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.dark-mode-toggle:hover {
+  background: #1abc9c;
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+html.dark-mode .dark-mode-toggle {
+  background: #1e1e1e;
+  color: #ffffff;
+  border-color: #ffffff;
+}
+
+/* Regras para o Modo Escuro */
+html.dark-mode {
+  background-color: #121212;
+}
+
+html.dark-mode body {
+  background-color: #121212;
+  color: #f5f5f5;
+}
+
+html.dark-mode nav {
+  background: rgba(18, 18, 18, 0.85) !important;
+  border-bottom-color: #2a2a2a;
+}
+
+html.dark-mode nav.menu-open {
+  background: rgba(18, 18, 18, 1) !important;
+}
+
+html.dark-mode .nav-link {
+  color: #e0e0e0;
+}
+
+html.dark-mode .mega-menu {
+  border-bottom-color: #2a2a2a;
+}
+
+html.dark-mode .section,
+html.dark-mode .mega-menu,
+html.dark-mode .card-entrevista {
+  background-color: #1e1e1e !important;
+  color: #f5f5f5 !important;
+}
+
+html.dark-mode p,
+html.dark-mode li a,
+html.dark-mode .card-descricao,
+html.dark-mode .valores-lista li span,
+html.dark-mode .equipe-nome,
+html.dark-mode .iniciativa-card p,
+html.dark-mode .link-titulo,
+html.dark-mode blockquote,
+html.dark-mode tbody td {
+  color: #f0f0f0 !important;
+}
+
+html.dark-mode h1,
+html.dark-mode h2,
+html.dark-mode h4 {
+  color: #ffffff !important;
+}
+
+html.dark-mode blockquote {
+  color: #bbb !important;
+  background-color: #252525;
+}
+
+html.dark-mode .card-entrevista .link-titulo {
+  color: #ffffff !important;
+}
+
+html.dark-mode .equipe-item {
+  background: #2a2a2a !important;
+}
+
+html.dark-mode .equipe-nome {
+  color: #f0f0f0 !important;
+}
+
+/* ============================================================
+   LISTA DE VALORES
+   ============================================================ */
+.valores-lista {
+  list-style: none;
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: 0;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+.valores-lista li {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.valores-lista li:last-child {
+  border-bottom: none;
+}
+
+.valores-lista li strong {
+  font-size: 16px;
+  color: #1abc9c;
+  margin-bottom: 4px;
+}
+
+.valores-lista li span {
+  font-size: 15px;
+  color: #555;
+  line-height: 1.6;
+  max-width: 480px;
+}
+
+body.dark-mode .valores-lista li {
+  border-bottom-color: #2a2a2a;
+}
+
+body.dark-mode .valores-lista li strong {
+  color: #1abc9c;
+}
+
+body.dark-mode .valores-lista li span {
+  color: #aaa;
+}
+
+/* ============================================================
+   CARROSSEL DOS CARDS DE INICIATIVAS
+   ============================================================ */
+.card-carousel {
+  position: relative;
+  width: 100%;
+  margin: 10px 0 14px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: transparent;
+  height: 420px;
+}
+
+.card-carousel-track {
+  display: flex;
+  height: 100%;
+  transition: transform 0.35s ease;
+}
+
+.card-carousel-slide {
+  min-width: 100%;
+  width: 100%;
+  height: 100%;
+  flex-shrink: 0;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+}
+
+.card-carousel-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover !important;
+  display: block;
+  background: transparent;
+  border: 2px solid #1abc9c;
+  border-radius: 8px;
+}
+
+.card-carousel-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  color: #999;
+  background: transparent;
+  font-family: "Montserrat", sans-serif;
+}
+
+.card-carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.45);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  z-index: 2;
+  transition: background 0.2s;
+}
+
+.card-carousel-btn:hover {
+  background: rgba(0, 0, 0, 0.65);
+}
+
+.card-carousel-btn.prev {
+  left: 6px;
+}
+.card-carousel-btn.next {
+  right: 6px;
+}
+
+.card-carousel-dots {
+  position: absolute;
+  bottom: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 5px;
+  z-index: 2;
+}
+
+.card-carousel-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.55);
+  cursor: pointer;
+  transition:
+    background 0.2s,
+    transform 0.2s;
+  border: none;
+  padding: 0;
+}
+
+.card-carousel-dot.active {
+  background: #fff;
+  transform: scale(1.3);
+}
+
+body.dark-mode .card-carousel {
+  background: #2a2a2a;
+}
+
+body.dark-mode .card-carousel-placeholder {
+  background: #2a2a2a;
+  color: #666;
+}
+
+/* ============================================================
+   CARROSSEL DA EQUIPE
+   ============================================================ */
+#equipeTrack > .equipe-secao:nth-child(5) .equipe-item {
+  min-width: 150px;
+  width: 150px;
+}
+
+#equipeTrack
+  > .equipe-secao:nth-child(5)
+  .equipe-item:not(.equipe-item-contain)
+  img {
+  height: 215px;
+}
+
+@media (max-width: 768px) {
+  #equipeTrack > .equipe-secao:nth-child(5) .equipe-secao-cards {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+
+#nossa-equipe .container {
+  overflow: visible;
+  position: relative;
+}
+
+.equipe-carousel {
+  position: relative;
+  margin-top: 30px;
+  overflow: visible;
+  padding: 0 40px;
+}
+
+.equipe-track {
+  display: flex;
+  gap: 0;
+  align-items: flex-start;
+  overflow: hidden;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.equipe-track::-webkit-scrollbar {
+  display: none;
+}
+
+.equipe-item {
+  min-width: 200px;
+  width: 200px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.07);
+}
+
+.equipe-item img {
+  width: 100%;
+  height: 260px;
+  object-fit: cover;
+  display: block;
+  border: 3px solid #1abc9c;
+}
+
+.equipe-item-contain img {
+  height: auto;
+  object-fit: contain;
+  background: transparent;
+}
+
+.equipe-item-contain {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.equipe-nome {
+  font-size: 14px;
+  font-weight: 700;
+  color: #222;
+  text-align: center;
+  padding: 8px 8px 2px;
+  margin: 0;
+}
+
+.equipe-cargo {
+  font-size: 12px;
+  font-weight: 500;
+  color: #1abc9c;
+  text-align: center;
+  padding: 0 8px 10px;
+  margin: 0;
+}
+
+.equipe-secao {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  flex-shrink: 0;
+  min-width: 100%;
+  width: 100%;
+  padding: 0 4px;
+}
+
+.equipe-secao-titulo {
+  font-size: 13px;
+  font-weight: 700;
+  color: #1abc9c;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+  border-bottom: 2px solid #1abc9c;
+  padding-bottom: 4px;
+  width: 100%;
+  text-align: center;
+  display: block;
+}
+
+.equipe-secao-cards {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.equipe-secao .equipe-item {
+  min-width: 180px;
+  width: 180px;
+}
+
+.equipe-grade {
+  min-width: 180px;
+  width: 180px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr auto;
+  gap: 4px;
+  background: #fff;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.07);
+}
+
+.equipe-grade img {
+  width: 100%;
+  height: 90px;
+  object-fit: cover;
+  display: block;
+  min-width: unset;
+  border-radius: 0;
+}
+
+.equipe-grade p {
+  grid-column: 1 / -1;
+  font-size: 12px;
+  font-weight: 600;
+  color: #333;
+  text-align: center;
+  padding: 8px;
+  margin: 0;
+  background: #fff;
+  border-top: 2px solid #1abc9c;
+}
+
+.equipe-btn {
+  position: absolute;
+  top: 140px;
+  transform: none;
+  background: rgba(0, 0, 0, 0.45);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  font-size: 22px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  transition: background 0.2s;
+}
+
+.equipe-btn:hover {
+  background: rgba(0, 0, 0, 0.65);
+}
+.equipe-btn.prev {
+  left: 0;
+}
+.equipe-btn.next {
+  right: 0;
+}
+
+/* MASCOTE */
+.mascote-layout {
+  display: flex;
+  align-items: center;
+  gap: 48px;
+  flex-direction: row-reverse;
+}
+
+.mascote-img {
+  width: 50%;
+  object-fit: contain;
+  flex-shrink: 0;
+  border-radius: 18px;
+}
+
+.mascote-texto {
+  flex: 1;
+}
+
+#mascote p {
+  font-size: 17px;
+  line-height: 1.9;
+  text-align: justify;
+  color: #444;
+}
+
+/* Justificação de textos das seções */
+#historia .container p,
+#historia .container blockquote,
+#certificacoes .section-tooltip p,
+#acoes .container p,
+#acoes .container > div p,
+#nosso-trabalho .iniciativa-card p,
+#nosso-trabalho blockquote,
+.card-descricao {
+  text-align: justify;
+}
+
+/* ============================================================
+   BOTÕES FLUTUANTES — TEMA E TAMANHO DE FONTE
+   ============================================================ */
+#btn-font-size {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 10000;
+  background: #ffffff;
+  border: 1px solid #1abc9c;
+  color: #1abc9c;
+  padding: 10px 16px;
+  border-radius: 30px;
+  cursor: pointer;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
+  font-size: 0.85rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+#btn-font-size:hover {
+  background: #1abc9c;
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+html.dark-mode #btn-font-size {
+  background: #1e1e1e;
+  color: #ffffff;
+  border-color: #2ecc71;
+}
+
+html.dark-mode #btn-font-size:hover {
+  background: #1abc9c;
+  color: #ffffff;
+}
+
+@media (max-width: 600px) {
+  .nav-actions {
+    gap: 8px;
+  }
+  .dark-mode-toggle {
+    padding: 8px 12px;
+    font-size: 0.78rem;
+  }
+  #btn-font-size {
+    padding: 8px 12px;
+    font-size: 0.78rem;
+  }
+}
+
+/* ============================================================
+   ESCALA DE FONTE — NÍVEL 1 (médio: +2px base)
+   ============================================================ */
+html.font-size-1 .logo {
+  font-size: 22px !important;
+  white-space: nowrap;
+  flex-shrink: 0;
+  gap: 8px;
+}
+html.font-size-1 .nav-logo-img {
+  width: 60px !important;
+  height: 60px !important;
+  flex-shrink: 0;
+}
+
+html.font-size-1 body {
+  font-size: 20px;
+}
+html.font-size-1 p {
+  font-size: 20px;
+}
+html.font-size-1 .nav-link {
+  font-size: 1.05rem;
+}
+html.font-size-1 .section h2 {
+  font-size: 2.4rem;
+}
+html.font-size-1 .iniciativa-header h3 {
+  font-size: 15px;
+}
+html.font-size-1 .hero h1 {
+  font-size: 56px;
+}
+html.font-size-1 .hero p {
+  font-size: 21px;
+}
+html.font-size-1 .mega-col h4 {
+  font-size: 13px;
+}
+html.font-size-1 .mega-col ul li a {
+  font-size: 21px;
+}
+html.font-size-1 .mega-col.small ul li a {
+  font-size: 16px;
+}
+html.font-size-1 .pilar-tab {
+  font-size: 16px;
+}
+html.font-size-1 .iniciativa-card p {
+  font-size: 15px;
+}
+html.font-size-1 .compromissos-lista {
+  font-size: 15px;
+}
+html.font-size-1 .link-titulo {
+  font-size: 17px;
+}
+html.font-size-1 .card-descricao {
+  font-size: 15px;
+}
+html.font-size-1 .btn-saiba-mais {
+  font-size: 14px;
+}
+html.font-size-1 .equipe-nome {
+  font-size: 15px;
+}
+html.font-size-1 .equipe-cargo {
+  font-size: 13px;
+}
+html.font-size-1 .equipe-secao-titulo {
+  font-size: 14px;
+}
+html.font-size-1 .valores-lista li strong {
+  font-size: 17px;
+}
+html.font-size-1 .valores-lista li span {
+  font-size: 16px;
+}
+html.font-size-1 .ods-desc {
+  font-size: 12px;
+}
+html.font-size-1 .ods-num {
+  font-size: 30px;
+}
+html.font-size-1 .info-item a {
+  font-size: 17px;
+}
+html.font-size-1 #sobre p {
+  font-size: 18px;
+}
+html.font-size-1 #mascote p {
+  font-size: 18px;
+}
+html.font-size-1 .toast {
+  font-size: 16px;
+}
+html.font-size-1 .dark-mode-toggle {
+  font-size: 0.88rem;
+}
+html.font-size-1 #btn-font-size {
+  font-size: 0.88rem;
+}
+
+/* ============================================================
+   ESCALA DE FONTE — NÍVEL 2 (grande: +5px base)
+   ============================================================ */
+html.font-size-2 .logo {
+  font-size: 20px !important;
+  white-space: nowrap;
+  flex-shrink: 0;
+  gap: 6px;
+}
+html.font-size-2 .nav-logo-img {
+  width: 54px !important;
+  height: 54px !important;
+  flex-shrink: 0;
+}
+
+html.font-size-2 body {
+  font-size: 23px;
+}
+html.font-size-2 p {
+  font-size: 23px;
+}
+html.font-size-2 .nav-link {
+  font-size: 1rem;
+}
+html.font-size-2 .section h2 {
+  font-size: 2.8rem;
+}
+html.font-size-2 .iniciativa-header h3 {
+  font-size: 16px;
+}
+html.font-size-2 .hero h1 {
+  font-size: 62px;
+}
+html.font-size-2 .hero p {
+  font-size: 24px;
+}
+html.font-size-2 .mega-col h4 {
+  font-size: 14px;
+}
+html.font-size-2 .mega-col ul li a {
+  font-size: 23px;
+}
+html.font-size-2 .mega-col.small ul li a {
+  font-size: 18px;
+}
+html.font-size-2 .pilar-tab {
+  font-size: 17px;
+}
+html.font-size-2 .iniciativa-card p {
+  font-size: 17px;
+}
+html.font-size-2 .compromissos-lista {
+  font-size: 17px;
+}
+html.font-size-2 .link-titulo {
+  font-size: 19px;
+}
+html.font-size-2 .card-descricao {
+  font-size: 17px;
+}
+html.font-size-2 .btn-saiba-mais {
+  font-size: 15px;
+}
+html.font-size-2 .equipe-nome {
+  font-size: 17px;
+}
+html.font-size-2 .equipe-cargo {
+  font-size: 15px;
+}
+html.font-size-2 .equipe-secao-titulo {
+  font-size: 15px;
+}
+html.font-size-2 .valores-lista li strong {
+  font-size: 20px;
+}
+html.font-size-2 .valores-lista li span {
+  font-size: 19px;
+}
+html.font-size-2 .ods-desc {
+  font-size: 13px;
+}
+html.font-size-2 .ods-num {
+  font-size: 34px;
+}
+html.font-size-2 .info-item a {
+  font-size: 19px;
+}
+html.font-size-2 #sobre p {
+  font-size: 20px;
+}
+html.font-size-2 #mascote p {
+  font-size: 20px;
+}
+html.font-size-2 .toast {
+  font-size: 17px;
+}
+html.font-size-2 .dark-mode-toggle {
+  font-size: 0.88rem;
+}
+html.font-size-2 #btn-font-size {
+  font-size: 0.88rem;
+}
+
+/* ============================================================
+   MODO ESCURO — cor das letras nos botões flutuantes
+   ============================================================ */
+html.dark-mode.font-size-1 #btn-font-size,
+html.dark-mode.font-size-2 #btn-font-size {
+  background: #1e1e1e;
+  color: #ffffff;
+  border-color: #2ecc71;
+}
+
+html.dark-mode .dark-mode-toggle {
+  color: #ffffff !important;
+}
+
+/* ============================================================
+   MODO ESCURO — PILARES E BOTÕES DE CONTATO
+   ============================================================ */
+html.dark-mode .pilar-tab {
+  background: #2a2a2a;
+  color: #cccccc;
+  border: 1px solid #3a3a3a;
+}
+
+html.dark-mode .pilar-tab.active,
+html.dark-mode .pilar-tab:hover {
+  background: #1abc9c;
+  color: #ffffff;
+  border-color: #1abc9c;
+}
+
+html.dark-mode .iniciativa-card {
+  background: #1e1e1e !important;
+  border-top-color: #1abc9c;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.35);
+}
+
+html.dark-mode .iniciativa-card-destaque {
+  background: linear-gradient(135deg, #1a2e2a, #162622) !important;
+  border-top-color: #2ecc71;
+}
+
+html.dark-mode .iniciativa-header h3 {
+  color: #f0f0f0 !important;
+}
+
+html.dark-mode .compromissos-lista li {
+  color: #e0e0e0;
+}
+
+html.dark-mode .info-item {
+  background: #1e1e1e !important;
+  border-color: #2a2a2a !important;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+}
+
+html.dark-mode .info-item:hover {
+  border-color: #1abc9c !important;
+  background: #252525 !important;
+}
+
+html.dark-mode .info-item a {
+  color: #f0f0f0 !important;
+}
+
+html.dark-mode .icon-img {
+  filter: brightness(0) invert(1);
+  opacity: 0.85;
+}
+
+html.dark-mode .info-item:nth-child(1) .icon-img,
+html.dark-mode .info-item:nth-child(2) .icon-img,
+html.dark-mode .info-item:nth-child(3) .icon-img {
+  filter: none;
+  opacity: 1;
+  background: transparent;
+  border-radius: 4px;
+  box-shadow: 0 0 0 2px #2a2a2a;
+}
+
+/* ============================================================
+   AJUSTES RESPONSIVOS — MOBILE
+   ============================================================ */
+
+@media (max-width: 768px) {
+  .container {
+    width: 92%;
+  }
+  .nav-center {
+    display: none;
+  }
+  .nav-spacer {
+    display: none;
+  }
+  .logo {
+    font-size: 20px;
+  }
+  .nav-logo-img {
+    width: 50px;
+    height: 50px;
+  }
+  .mega-inner {
+    flex-direction: column;
+    gap: 24px;
+    padding: 0 22px;
+  }
+  .hero {
+    min-height: 100vh;
+    height: auto;
+    padding: 100px 0 60px;
+  }
+  .hero h1 {
+    font-size: 36px;
+  }
+  .hero p,
+  .hero p.subtitle {
+    font-size: 16px;
+    padding: 0 20px;
+  }
+  .section h2 {
+    font-size: 1.7rem;
+  }
+  .sobre-layout,
+  .mascote-layout {
+    flex-direction: column;
+    gap: 24px;
+  }
+  .sobre-img,
+  .mascote-img {
+    width: 100%;
+  }
+  .ods-card {
+    width: 90px;
+    height: 90px;
+  }
+  .ods-num {
+    font-size: 20px;
+  }
+  .ods-desc {
+    font-size: 9px;
+  }
+  .card-carousel {
+    height: auto;
+    aspect-ratio: 4/3;
+  }
+  .equipe-item {
+    min-width: 140px;
+    width: 140px;
+  }
+  .equipe-secao .equipe-item {
+    min-width: 140px;
+    width: 140px;
+  }
+  .equipe-item img {
+    height: 180px;
+  }
+  .equipe-btn {
+    top: 90px;
+    width: 30px;
+    height: 30px;
+    font-size: 18px;
+  }
+  tbody td,
+  thead th {
+    padding: 10px 12px;
+    font-size: 14px;
+  }
+  .contact-layout {
+    flex-direction: column;
+  }
+  #form,
+  .info-contato {
+    flex: 1 1 100%;
+  }
+  .iniciativa-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .ods-badges {
+    justify-content: flex-start;
+  }
+
+  .toast {
+    min-width: unset;
+    max-width: 90vw;
+  }
+  #notification-container,
+  .notification-container {
+    right: 5%;
+    left: 5%;
+  }
+  .dark-mode-toggle,
+  #btn-font-size {
+    padding: 8px 12px;
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 600px) {
+  tbody td:first-child {
+    white-space: normal;
+    width: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero h1 {
+    font-size: 28px;
+  }
+  .ods-card {
+    width: 75px;
+    height: 75px;
+  }
+  .modal-content {
+    padding: 20px;
+  }
+}
+
+.hamburger {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 26px;
+  color: #1abc9c;
+  cursor: pointer;
+  padding: 0 8px;
+  margin-left: auto;
+}
+
+@media (max-width: 768px) {
+  .hamburger {
+    display: block;
+  }
+  .nav-spacer {
+    display: none;
+  }
+  .nav-center {
+    display: none;
+    position: fixed;
+    top: 70px;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: stretch;
+    background: #fff;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    transform: none;
+    gap: 0;
+    z-index: 1001;
+  }
+  .nav-center.mobile-open {
+    display: flex;
+  }
+  .nav-center .nav-link {
+    height: auto;
+    width: 100%;
+    padding: 16px 22px;
+    border-bottom: 1px solid #f0f0f0;
+    opacity: 1;
+  }
+  html.dark-mode .nav-center {
+    background: #1e1e1e;
+  }
+  html.dark-mode .nav-center .nav-link {
+    border-bottom-color: #2a2a2a;
+  }
+  .mega-menu {
+    max-height: calc(100vh - 70px);
+    overflow-y: auto;
+  }
+}
+
+/* ============================================================
+   SEÇÃO TRANSPARÊNCIA
+   ============================================================ */
+.status-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+.status-em-execucao {
+  background: #fff4cc;
+  color: #8a6d1d;
+}
+.status-analise {
+  background: #d6ecff;
+  color: #1a5d8a;
+}
+.status-concluido {
+  background: #d9f7e6;
+  color: #1f7a4d;
+}
+
+.transparencia-fotos {
+  display: flex;
+  gap: 14px;
+  margin: 0 0 18px 0;
+  flex-wrap: wrap;
+}
+.transparencia-foto-placeholder {
+  flex: 1 1 calc(50% - 14px);
+  min-width: 220px;
+  aspect-ratio: 4 / 3;
+  background: #eef2f1;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #8a9794;
+  font-size: 0.85rem;
+  overflow: hidden;
+}
+.transparencia-foto-placeholder img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  border-radius: 6px;
+}
+
+.transp-tab {
+  cursor: pointer;
+  padding: 10px 20px;
+  margin: 0 6px 10px 0;
+  border: 1px solid #d7e2e0;
+  border-radius: 30px;
+  background: #f4f7f6;
+  color: #444;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition:
+    background 0.2s,
+    color 0.2s,
+    border-color 0.2s;
+}
+.transp-tab:hover {
+  background: #e6f6f1;
+}
+.transp-tab.active {
+  background: #1abc9c;
+  color: #fff;
+  border-color: #1abc9c;
+}
+.transp-content {
+  display: none;
+}
+.transp-content.active {
+  display: block;
+}
+
+/* ============================================================
+   GALERIA DE PARCERIAS
+   ============================================================ */
+.parcerias-galeria {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 24px;
+  margin-bottom: 40px;
+  border: 2px solid #1abc9c;
+  border-radius: 12px;
+  padding: 24px;
+  background: #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+.parceiro-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.parceiro-item img {
+  width: 100%;
+  height: 120px;
+  object-fit: contain;
+  background: #fff;
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s;
+}
+
+.parceiro-item img:hover {
+  transform: scale(1.05);
+}
+
+.parceiro-item p {
+  margin-top: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #444;
+  overflow: visible;
+}
+
+@media (max-width: 768px) {
+  .parcerias-galeria {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+html.dark-mode .parcerias-galeria {
+  background: #1e1e1e !important;
+  border-color: #1abc9c;
+}
+
+html.dark-mode .parceiro-item p {
+  color: #f0f0f0 !important;
+}
+
+html.dark-mode .parceiro-item img {
+  background: #2a2a2a;
+}
+/* ============================================================
+   MENU MOBILE — BOTÃO VOLTAR (aparece quando mega menu abre)
+   ============================================================ */
+#mobile-back-btn {
+  display: none;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 14px 22px;
+  background: #f0faf7;
+  border: none;
+  border-bottom: 1px solid #d4ede6;
+  color: #1abc9c;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+  text-align: left;
+  letter-spacing: 0.02em;
+}
+#mobile-back-btn::before {
+  content: "←";
+  font-size: 1.1rem;
+}
+#mobile-back-btn.visible {
+  display: flex;
+}
+html.dark-mode #mobile-back-btn {
+  background: #1a2e2a;
+  border-bottom-color: #2a3e38;
+  color: #2ecc71;
+}
+
+/* ============================================================
+   PATCH CSS — Menu Mobile + Nosso Trabalho mais leve
+   Cole este bloco NO FINAL do seu style.css existente,
+   substituindo/complementando as regras antigas de mobile.
+   ============================================================ */
+
+/* ─────────────────────────────────────────────
+   MENU MOBILE — NAV CENTER (lista de tópicos)
+   ───────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+  /* Remove o botão voltar antigo que estava no CSS (agora é o painel novo) */
+  #mobile-back-btn {
+    display: none !important;
+  }
+
+  .hamburger {
+    display: block;
+  }
+  .nav-spacer {
+    display: none;
+  }
+
+  /* Lista principal de tópicos */
+  .nav-center {
+    display: none;
+    position: fixed;
+    top: 70px;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: stretch;
+    background: #fff;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+    transform: none;
+    gap: 0;
+    z-index: 1002;
+    max-height: calc(100vh - 70px);
+    overflow-y: auto;
+    border-top: 2px solid #1abc9c;
+  }
+
+  .nav-center.mobile-open {
+    display: flex;
+    animation: slideDownMenu 0.25s ease;
+  }
+
+  @keyframes slideDownMenu {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .nav-center .nav-item {
+    border-bottom: 1px solid #f0f0f0;
+  }
+
+  .nav-center .nav-link {
+    height: auto;
+    width: 100%;
+    padding: 18px 22px;
+    opacity: 1;
+    font-size: 1rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  /* Seta indicando que tem submenu (removida — não abrimos mais submenu no mobile) */
+  .nav-item[data-menu] .nav-link::after {
+    content: "" !important;
+  }
+
+  .nav-link-btn {
+    margin: 12px 22px;
+    border-radius: 30px !important;
+    justify-content: center;
+    background: linear-gradient(135deg, #1abc9c, #2ecc71);
+    color: white !important;
+    padding: 14px 22px !important;
+  }
+
+  .nav-link-btn::after {
+    content: "" !important;
+  }
+
+  /* Oculta os mega menus antigos no mobile */
+  .mega-menu {
+    display: none !important;
+  }
+
+  /* ─────────────────────────────────────────────
+     PAINEL DE SUBMENU MOBILE (desativado — mantido
+     no CSS apenas para não quebrar nada, mas não é
+     mais aberto pelo script.js)
+     ───────────────────────────────────────────── */
+
+  #mobile-submenu {
+    position: fixed;
+    top: 70px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #fff;
+    z-index: 1003;
+    overflow-y: auto;
+    transform: translateX(100%);
+    transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+  }
+
+  #mobile-submenu.active {
+    transform: translateX(0);
+  }
+
+  /* Botão Voltar */
+  #mobile-back-btn {
+    display: flex !important;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 16px 22px;
+    background: #f0faf7;
+    border: none;
+    border-bottom: 2px solid #d4ede6;
+    color: #1abc9c;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    cursor: pointer;
+    text-align: left;
+    letter-spacing: 0.02em;
+    flex-shrink: 0;
+  }
+
+  .back-arrow {
+    font-size: 1.2rem;
+    font-weight: 700;
+    line-height: 1;
+    color: #1abc9c;
+  }
+
+  #mobile-submenu-content {
+    padding: 8px 0 40px;
+  }
+
+  .mobile-submenu-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #1abc9c;
+    padding: 20px 22px 8px;
+    border-bottom: 1px solid #eef7f4;
+    margin-bottom: 4px;
+  }
+
+  .mobile-submenu-subtitle {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: #999;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 16px 22px 6px;
+    margin: 0;
+  }
+
+  .mobile-submenu-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .mobile-submenu-list li {
+    border-bottom: 1px solid #f4f4f4;
+  }
+
+  .mobile-submenu-link {
+    display: flex;
+    align-items: center;
+    padding: 15px 22px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #222;
+    text-decoration: none;
+    transition:
+      background 0.15s,
+      color 0.15s;
+  }
+
+  .mobile-submenu-link:hover,
+  .mobile-submenu-link:active {
+    background: #f0faf7;
+    color: #1abc9c;
+  }
+
+  /* Dark mode — submenu mobile */
+  html.dark-mode #mobile-submenu {
+    background: #1a1a1a;
+  }
+
+  html.dark-mode #mobile-back-btn {
+    background: #1a2e2a;
+    border-bottom-color: #2a3e38;
+    color: #2ecc71;
+  }
+
+  html.dark-mode .back-arrow {
+    color: #2ecc71;
+  }
+
+  html.dark-mode .mobile-submenu-title {
+    color: #2ecc71;
+    border-bottom-color: #222;
+  }
+  html.dark-mode .mobile-submenu-subtitle {
+    color: #666;
+  }
+
+  html.dark-mode .mobile-submenu-list li {
+    border-bottom-color: #252525;
+  }
+
+  html.dark-mode .mobile-submenu-link {
+    color: #e0e0e0;
+  }
+
+  html.dark-mode .mobile-submenu-link:hover {
+    background: #1e2e2a;
+    color: #2ecc71;
+  }
+
+  html.dark-mode .nav-center {
+    background: #1a1a1a;
+    border-top-color: #2ecc71;
+  }
+
+  html.dark-mode .nav-center .nav-item {
+    border-bottom-color: #252525;
+  }
+
+  html.dark-mode .nav-center .nav-link {
+    color: #e0e0e0;
+  }
+}
+
+/* ─────────────────────────────────────────────
+   NOSSO TRABALHO — Seção mais leve no mobile
+   ───────────────────────────────────────────── */
+
+/* Tabs dos pilares — visual mais compacto no mobile */
+@media (max-width: 768px) {
+  .pilares-tabs {
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+
+  .pilar-tab {
+    padding: 8px 16px;
+    font-size: 13px;
+    border-radius: 20px;
+  }
+
+  /* Grid de 1 coluna no mobile para não apertar */
+  .pilar-content.active {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  /* Cards de iniciativa: menor padding, sem hover pesado */
+  .iniciativa-card {
+    padding: 14px 15px;
+    border-radius: 10px;
+  }
+
+  .iniciativa-card:hover {
+    transform: none; /* desliga o hover no mobile (sem cursor) */
+  }
+
+  /* Cabeçalho do card: empilha verticalmente se necessário */
+  .iniciativa-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    margin-bottom: 8px;
+  }
+
+  .iniciativa-header h3 {
+    font-size: 15px;
+    line-height: 1.4;
+  }
+
+  /* Badges ODS: menores no mobile */
+  .ods-badges img {
+    width: 22px;
+    height: 22px;
+  }
+
+  /* Carrossel de fotos dentro do card: altura menor */
+  .card-carousel {
+    height: auto;
+    aspect-ratio: 4 / 3;
+    margin-bottom: 10px;
+  }
+
+  /* Texto dos cards: tamanho menor e espaçamento reduzido */
+  .iniciativa-card p {
+    font-size: 13px;
+    line-height: 1.55;
+    margin-bottom: 6px;
+  }
+
+  /* Lista de compromissos */
+  .compromissos-lista {
+    font-size: 13px;
+    gap: 6px;
+  }
+
+  /* Blockquote da seção */
+  #nosso-trabalho blockquote {
+    font-size: 1rem;
+    padding-left: 12px;
+    margin-bottom: 20px;
+  }
+
+  /* Título da seção */
+  #nosso-trabalho .section-tooltip h2 {
+    font-size: 1.5rem;
+  }
+
+  /* Tabs de transparência — mesmo padrão */
+  .transp-tab {
+    font-size: 13px;
+    padding: 8px 14px;
+  }
+}
+
+/* ─────────────────────────────────────────────
+   AJUSTE EXTRA: tela muito pequena (< 400px)
+   ───────────────────────────────────────────── */
+@media (max-width: 400px) {
+  .pilar-tab {
+    font-size: 12px;
+    padding: 7px 12px;
+  }
+
+  .mobile-submenu-link {
+    font-size: 0.95rem;
+    padding: 14px 18px;
+  }
+
+  .iniciativa-header h3 {
+    font-size: 14px;
+  }
+}
+
+/* ============================================================
+   PATCH CSS — Menu Mobile + Nosso Trabalho + ODS + Botões
+   Cole este bloco NO FINAL do seu style.css existente.
+   ============================================================ */
+
+/* ─────────────────────────────────────────────
+   MENU MOBILE — NAV CENTER (lista de tópicos)
+   ───────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+  #mobile-back-btn {
+    display: none !important;
+  }
+
+  .hamburger {
+    display: block;
+  }
+  .nav-spacer {
+    display: none;
+  }
+
+  .nav-center {
+    display: none;
+    position: fixed;
+    top: 70px;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: stretch;
+    background: #fff;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+    transform: none;
+    gap: 0;
+    z-index: 1002;
+    max-height: calc(100vh - 70px);
+    overflow-y: auto;
+    border-top: 2px solid #1abc9c;
+  }
+
+  .nav-center.mobile-open {
+    display: flex;
+    animation: slideDownMenu 0.25s ease;
+  }
+
+  @keyframes slideDownMenu {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .nav-center .nav-item {
+    border-bottom: 1px solid #f0f0f0;
+  }
+
+  .nav-center .nav-link {
+    height: auto;
+    width: 100%;
+    padding: 18px 22px;
+    opacity: 1;
+    font-size: 1rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .nav-item[data-menu] .nav-link::after {
+    content: "" !important;
+  }
+
+  .nav-link-btn {
+    margin: 12px 22px;
+    border-radius: 30px !important;
+    justify-content: center;
+    background: linear-gradient(135deg, #1abc9c, #2ecc71);
+    color: white !important;
+    padding: 14px 22px !important;
+  }
+
+  .nav-link-btn::after {
+    content: "" !important;
+  }
+
+  .mega-menu {
+    display: none !important;
+  }
+
+  /* ─── PAINEL DE SUBMENU MOBILE (não é mais aberto pelo script) ─── */
+
+  #mobile-submenu {
+    position: fixed;
+    top: 70px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #fff;
+    z-index: 1003;
+    overflow-y: auto;
+    transform: translateX(100%);
+    transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+  }
+
+  #mobile-submenu.active {
+    transform: translateX(0);
+  }
+
+  #mobile-back-btn {
+    display: flex !important;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 16px 22px;
+    background: #f0faf7;
+    border: none;
+    border-bottom: 2px solid #d4ede6;
+    color: #1abc9c;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    cursor: pointer;
+    text-align: left;
+    letter-spacing: 0.02em;
+    flex-shrink: 0;
+  }
+
+  .back-arrow {
+    font-size: 1.2rem;
+    font-weight: 700;
+    line-height: 1;
+    color: #1abc9c;
+  }
+
+  #mobile-submenu-content {
+    padding: 8px 0 40px;
+  }
+
+  .mobile-submenu-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #1abc9c;
+    padding: 20px 22px 8px;
+    border-bottom: 1px solid #eef7f4;
+    margin-bottom: 4px;
+  }
+
+  .mobile-submenu-subtitle {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: #999;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 16px 22px 6px;
+    margin: 0;
+  }
+
+  .mobile-submenu-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .mobile-submenu-list li {
+    border-bottom: 1px solid #f4f4f4;
+  }
+
+  .mobile-submenu-link {
+    display: flex;
+    align-items: center;
+    padding: 15px 22px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #222;
+    text-decoration: none;
+    transition:
+      background 0.15s,
+      color 0.15s;
+  }
+
+  .mobile-submenu-link:active {
+    background: #f0faf7;
+    color: #1abc9c;
+  }
+
+  /* Dark mode submenu */
+  html.dark-mode #mobile-submenu {
+    background: #1a1a1a;
+  }
+  html.dark-mode #mobile-back-btn {
+    background: #1a2e2a;
+    border-bottom-color: #2a3e38;
+    color: #2ecc71;
+  }
+  html.dark-mode .back-arrow {
+    color: #2ecc71;
+  }
+  html.dark-mode .mobile-submenu-title {
+    color: #2ecc71;
+    border-bottom-color: #222;
+  }
+  html.dark-mode .mobile-submenu-subtitle {
+    color: #666;
+  }
+  html.dark-mode .mobile-submenu-list li {
+    border-bottom-color: #252525;
+  }
+  html.dark-mode .mobile-submenu-link {
+    color: #e0e0e0;
+  }
+  html.dark-mode .mobile-submenu-link:active {
+    background: #1e2e2a;
+    color: #2ecc71;
+  }
+  html.dark-mode .nav-center {
+    background: #1a1a1a;
+    border-top-color: #2ecc71;
+  }
+  html.dark-mode .nav-center .nav-item {
+    border-bottom-color: #252525;
+  }
+  html.dark-mode .nav-center .nav-link {
+    color: #e0e0e0;
+  }
+}
+.ods-tooltip {
+  display: none;
+}
+/* ─────────────────────────────────────────────
+   ODS — SEM FLIP 3D NO MOBILE
+   Substitui o flip por um tooltip simples ao toque
+   ───────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+  /* Desativa a perspectiva e o efeito 3D */
+  .ods-card {
+    perspective: none;
+    position: relative;
+  }
+
+  .ods-card-inner {
+    transform-style: flat;
+    transition: none;
+    transform: none !important;
+  }
+
+  /* Garante que a frente sempre apareça */
+  .ods-card-front {
+    position: relative;
+    backface-visibility: visible;
+    -webkit-backface-visibility: visible;
+  }
+
+  /* Esconde o verso (flip) */
+  .ods-card-back {
+    display: none;
+  }
+
+  /* Tooltip simples que aparece ao toque (via :active ou classe .touched no JS) */
+  .ods-card .ods-tooltip {
+    display: none;
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(26, 188, 156, 0.92);
+    color: #fff;
+    font-family: "Montserrat", sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1.3;
+    text-align: center;
+    padding: 6px 10px;
+    border-radius: 8px;
+    white-space: nowrap;
+    max-width: 130px;
+    white-space: normal;
+    z-index: 20;
+    pointer-events: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
+  }
+
+  /* Setinha do tooltip */
+  .ods-card .ods-tooltip::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 5px solid transparent;
+    border-top-color: rgba(26, 188, 156, 0.92);
+  }
+
+  /* Mostra tooltip ao toque */
+  .ods-card.touched .ods-tooltip {
+    display: block;
+    animation: tooltipIn 0.18s ease;
+  }
+
+  @keyframes tooltipIn {
+    from {
+      opacity: 0;
+      transform: translateX(-50%) translateY(4px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+  }
+
+  /* Leve destaque visual na imagem ao toque */
+  .ods-card.touched .ods-card-front img {
+    filter: brightness(0.82);
+    transform: scale(1.04);
+    transition:
+      filter 0.15s,
+      transform 0.15s;
+  }
+}
+
+/* ─────────────────────────────────────────────
+   BOTÕES FLUTUANTES — espaço entre Tema e Fonte
+   ───────────────────────────────────────────── */
+
+/* Botão de tema sobe para não colidir com o slider */
+.dark-mode-toggle {
+  bottom: 90px !important;
+}
+
+/* No mobile, espaço ainda maior pois o slider ocupa mais */
+@media (max-width: 600px) {
+  .dark-mode-toggle {
+    bottom: 82px !important;
+    right: 12px !important;
+  }
+
+  /* Slider de fonte */
+  #fslider-wrapper {
+    right: 12px !important;
+  }
+}
+
+/* ─────────────────────────────────────────────
+   NOSSO TRABALHO — Seção mais leve no mobile
+   ───────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+  /* CORREÇÃO PRINCIPAL: força o grid a aparecer */
+  .pilar-content {
+    display: none;
+  }
+
+  .pilar-content.active {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 14px;
+  }
+
+  .pilares-tabs {
+    gap: 8px;
+    margin-bottom: 20px;
+    justify-content: center;
+  }
+
+  .pilar-tab {
+    padding: 8px 16px;
+    font-size: 13px;
+    border-radius: 20px;
+    flex: 0 0 auto;
+  }
+
+  .iniciativa-card {
+    padding: 14px 15px;
+    border-radius: 10px;
+  }
+
+  /* Sem hover no mobile */
+  .iniciativa-card:hover {
+    transform: none;
+  }
+
+  .iniciativa-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    margin-bottom: 8px;
+  }
+
+  .iniciativa-header h3 {
+    font-size: 15px;
+    line-height: 1.4;
+  }
+
+  .ods-badges img {
+    width: 20px;
+    height: 20px;
+  }
+
+  .card-carousel {
+    height: auto;
+    aspect-ratio: 4 / 3;
+    margin-bottom: 10px;
+  }
+
+  .iniciativa-card p {
+    font-size: 13px;
+    line-height: 1.55;
+    margin-bottom: 6px;
+  }
+
+  .compromissos-lista {
+    font-size: 13px;
+    gap: 6px;
+  }
+
+  #nosso-trabalho blockquote {
+    font-size: 1rem;
+    padding-left: 12px;
+    margin-bottom: 20px;
+  }
+
+  #nosso-trabalho .section-tooltip h2 {
+    font-size: 1.5rem;
+  }
+
+  .transp-tab {
+    font-size: 13px;
+    padding: 8px 14px;
+  }
+}
+
+@media (max-width: 400px) {
+  .pilar-tab {
+    font-size: 12px;
+    padding: 7px 12px;
+  }
+  .mobile-submenu-link {
+    font-size: 0.95rem;
+    padding: 14px 18px;
+  }
+  .iniciativa-header h3 {
+    font-size: 14px;
+  }
+}
+
+/* ============================================================
+   FIX — SCROLL DO BOTÃO "DOE AQUI"
+   O alvo #doacao é uma <div>, então precisa da própria
+   scroll-margin-top pra não ficar coberto pelo navbar fixo.
+   ============================================================ */
+#doacao {
+  scroll-margin-top: 75px;
+}
+
+/* ============================================================
+   PATCH v5 — MODO DE EDIÇÃO DO SITE
+   Apague QUALQUER versão anterior deste patch que você tenha
+   colado, e cole este bloco no lugar, no final do style.css.
+
+   Novidades da v5:
+   - Nos cartões de equipe e parceiros: agora só UM botão "+"
+     (no canto da foto). Ele abre um menu "Editar imagem" /
+     "Editar texto" — só depois de escolher é que aparecem os
+     símbolos individuais.
+   - Botões de texto ("+"/"↺") agora ficam DENTRO da caixa do
+     texto, colados na direita e centralizados verticalmente —
+     não flutuam mais em cima, então não invadem a foto nem
+     o texto vizinho.
+   ============================================================ */
+
+/* Botão "Editar Site" — dentro da navbar, à esquerda do Modo Escuro */
+#btn-editar-site {
+  position: static !important;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+  border: 1px solid #2ecc71;
+  color: #2ecc71;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+#btn-editar-site:hover {
+  background: #2ecc71;
+  color: #ffffff;
+}
+
+#btn-editar-site.ativo {
+  background: linear-gradient(135deg, #1abc9c, #2ecc71);
+  color: #ffffff;
+  border-color: transparent;
+}
+
+html.dark-mode #btn-editar-site {
+  background: #1e1e1e;
+  border-color: #2ecc71;
+}
+
+@media (max-width: 600px) {
+  #btn-editar-site {
+    width: 34px;
+    height: 34px;
+    font-size: 14px;
+  }
+}
+
+/* ============================================================
+   TEXTOS — botão "+" e "↺" ficam DENTRO da caixa, na direita,
+   centralizados verticalmente. Não flutuam mais em cima.
+   ============================================================ */
+.ee-text-btn {
+  display: none;
+  position: absolute;
+  top: 50%;
+  right: 4px;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  border: 1px solid #1abc9c;
+  background: #ffffff;
+  color: #1abc9c;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 800;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0;
+  align-items: center;
+  justify-content: center;
+  z-index: 40;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+/* mostra os textos "avulsos" (fora de cartões de equipe/parceiros)
+   direto no modo de edição global */
+body.edit-mode-ativo .ee-text-btn:not(.ee-text-btn-g) {
+  display: flex;
+}
+
+.ee-text-btn.ee-ativo {
+  background: #1abc9c;
+  color: #ffffff;
+}
+
+[contenteditable="true"] {
+  outline: 2px dashed #1abc9c;
+  outline-offset: 2px;
+  background: rgba(26, 188, 156, 0.06);
+  border-radius: 3px;
+}
+
+.ee-recuperar-btn {
+  display: none;
+  position: absolute;
+  top: 50%;
+  right: 28px;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  border: 1px solid #e67e22;
+  background: #ffffff;
+  color: #e67e22;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0;
+  align-items: center;
+  justify-content: center;
+  z-index: 40;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+body.edit-mode-ativo .ee-recuperar-btn:not(.ee-recuperar-btn-g) {
+  display: flex;
+}
+
+.ee-recuperar-btn:hover {
+  background: #e67e22;
+  color: #ffffff;
+}
+
+/* ============================================================
+   IMAGENS AVULSAS (fora de cartões de equipe/parceiros) —
+   símbolo verde flutua em cima da foto, alinhado à direita
+   ============================================================ */
+.ee-img-btn {
+  display: none;
+  position: absolute;
+  top: -22px;
+  right: 0;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: #2ecc71;
+  color: #ffffff;
+  border: none;
+  font-size: 16px;
+  font-weight: 800;
+  line-height: 1;
+  cursor: pointer;
+  z-index: 40;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+
+body.edit-mode-ativo .ee-img-btn:not(.ee-img-btn-g) {
+  display: flex;
+}
+
+.ee-img-menu {
+  display: none;
+  position: absolute;
+  top: 4px;
+  right: 0;
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  z-index: 41;
+  min-width: 150px;
+}
+
+.ee-img-menu.ee-aberto {
+  display: block;
+}
+
+.ee-img-menu button {
+  display: block;
+  width: 100%;
+  padding: 10px 14px;
+  border: none;
+  background: #ffffff;
+  text-align: left;
+  font-family: "Montserrat", sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  color: #333333;
+}
+
+.ee-img-menu button:hover {
+  background: #f0fdf8;
+  color: #1abc9c;
+}
+
+.ee-img-menu button.ee-remover {
+  color: #e74c3c;
+}
+
+.ee-img-menu button.ee-remover:hover {
+  background: #fdeceb;
+  color: #e74c3c;
+}
+
+/* ============================================================
+   CARROSSÉIS (iniciativas) — continuam com o botão único
+   "🖼 Fotos" acima do carrossel inteiro (já funcionando)
+   ============================================================ */
+.ee-carrossel-btn {
+  display: none;
+  position: absolute;
+  top: -26px;
+  left: 50%;
+  transform: translateX(-50%);
+  align-items: center;
+  gap: 4px;
+  padding: 4px 12px;
+  border: 1px solid #1abc9c;
+  background: #ffffff;
+  color: #1abc9c;
+  border-radius: 14px;
+  font-family: "Montserrat", sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  z-index: 42;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  white-space: nowrap;
+}
+
+body.edit-mode-ativo .ee-carrossel-btn {
+  display: flex;
+}
+
+.ee-carrossel-menu {
+  display: none;
+  position: absolute;
+  top: 2px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  z-index: 43;
+  min-width: 190px;
+}
+
+.ee-carrossel-menu.ee-aberto {
+  display: block;
+}
+
+.ee-carrossel-menu button {
+  display: block;
+  width: 100%;
+  padding: 10px 14px;
+  border: none;
+  background: #ffffff;
+  text-align: left;
+  font-family: "Montserrat", sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  color: #333333;
+}
+
+.ee-carrossel-menu button:hover {
+  background: #f0fdf8;
+  color: #1abc9c;
+}
+
+.ee-slide-remove {
+  display: none;
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: #e74c3c;
+  color: #ffffff;
+  border: none;
+  font-size: 14px;
+  font-weight: 800;
+  cursor: pointer;
+  z-index: 45;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+body.edit-mode-ativo .ee-slide-remove {
+  display: flex;
+}
+
+.ee-add-tile {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: rgba(26, 188, 156, 0.07);
+  border: 2px dashed #1abc9c;
+  cursor: pointer;
+  color: #1abc9c;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  text-align: center;
+  border-radius: 6px;
+}
+
+body.edit-mode-ativo .ee-add-tile {
+  display: flex;
+}
+
+.ee-add-tile-conteudo {
+  pointer-events: none;
+  line-height: 1.4;
+}
+
+/* ============================================================
+   CARTÕES AGRUPADOS (equipe e parceiros) — UM botão só, que
+   abre "Editar imagem" / "Editar texto"
+   ============================================================ */
+.ee-grupo-btn {
+  display: none;
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: #2ecc71;
+  color: #ffffff;
+  border: none;
+  font-size: 16px;
+  font-weight: 800;
+  line-height: 1;
+  cursor: pointer;
+  z-index: 46;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+body.edit-mode-ativo .ee-grupo-btn {
+  display: flex;
+}
+
+.ee-grupo-menu {
+  display: none;
+  position: absolute;
+  top: 38px;
+  right: 8px;
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  z-index: 47;
+  min-width: 160px;
+}
+
+.ee-grupo-menu.ee-aberto {
+  display: block;
+}
+
+.ee-grupo-menu button {
+  display: block;
+  width: 100%;
+  padding: 10px 14px;
+  border: none;
+  background: #ffffff;
+  text-align: left;
+  font-family: "Montserrat", sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  color: #333333;
+}
+
+.ee-grupo-menu button:hover {
+  background: #f0fdf8;
+  color: #1abc9c;
+}
+
+/* Só aparecem depois de escolher a opção certa no menu do grupo */
+.ee-text-btn-g,
+.ee-recuperar-btn-g,
+.ee-img-btn-g {
+  display: none;
+}
+
+.ee-grupo-modo-texto .ee-text-btn-g .ee-grupo-modo-texto .ee-recuperar-btn-g {
+  display: flex;
+}
+
+.ee-grupo-modo-imagem .ee-img-btn-g {
+  display: flex;
+}
+
+/* ============================================================
+   PATCH v6 — NAVEGAÇÃO, LOGO E ORGANIZAÇÃO DO MENU
+   ============================================================ */
+#nav-edit-panel {
+  display: none;
+  position: fixed;
+  top: 76px;
+  right: 22px;
+  z-index: 1100;
+  width: min(360px, calc(100vw - 32px));
+  padding: 16px;
+  border: 1px solid rgba(26, 188, 156, 0.28);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.98);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.16);
+  font-family: "Montserrat", sans-serif;
+}
+#nav-edit-panel.aberto {
+  display: block;
+}
+#nav-edit-panel h3 {
+  margin: 0 0 6px;
+  color: #1abc9c;
+  font-size: 15px;
+}
+#nav-edit-panel p {
+  margin: 0 0 12px;
+  color: #666;
+  font-size: 12px;
+  line-height: 1.45;
+}
+.nav-edit-list {
+  display: grid;
+  gap: 6px;
+  max-height: 300px;
+  overflow: auto;
+}
+.nav-edit-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border: 1px solid #e7efec;
+  border-radius: 9px;
+  background: #fbfffd;
+  font-size: 12px;
+}
+.nav-edit-row.sub {
+  margin-left: 16px;
+  background: #fff;
+}
+.nav-edit-row strong {
+  flex: 1;
+  font-weight: 600;
+}
+.nav-edit-row small {
+  color: #1abc9c;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.nav-drag-handle {
+  border: 0;
+  background: transparent;
+  color: #1abc9c;
+  cursor: grab;
+  font-size: 17px;
+  line-height: 1;
+  padding: 0 2px;
+}
+.nav-drag-handle:active {
+  cursor: grabbing;
+}
+.nav-edit-row.dragging {
+  opacity: 0.45;
+}
+.nav-edit-row.drop-target {
+  outline: 2px dashed #2ecc71;
+}
+.nav-item,
+.mega-col,
+.mega-col li {
+  position: relative;
+}
+.nav-edit-control {
+  display: none;
+  position: absolute;
+  top: 7px;
+  right: -4px;
+  z-index: 60;
+  width: 24px;
+  height: 24px;
+  border: 1px solid #1abc9c;
+  border-radius: 50%;
+  background: #fff;
+  color: #1abc9c;
+  cursor: pointer;
+  font-weight: 800;
+  box-shadow: 0 2px 7px rgba(0, 0, 0, 0.16);
+}
+body.edit-mode-ativo .nav-edit-control {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.nav-edit-control:hover {
+  background: #1abc9c;
+  color: #fff;
+}
+.nav-logo-anchor {
+  position: relative !important;
+}
+.nav-logo-edit {
+  top: 4px;
+  right: -2px;
+}
+.nav-logo-menu {
+  display: none;
+  position: absolute;
+  top: 32px;
+  left: 0;
+  min-width: 150px;
+  z-index: 80;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+  overflow: hidden;
+}
+.nav-logo-menu.aberto {
+  display: block;
+}
+.nav-logo-menu button {
+  display: block;
+  width: 100%;
+  padding: 9px 12px;
+  border: 0;
+  background: #fff;
+  text-align: left;
+  cursor: pointer;
+  font:
+    600 12px "Montserrat",
+    sans-serif;
+}
+.nav-logo-menu button:hover {
+  background: #f0fdf8;
+  color: #1abc9c;
+}
+html.dark-mode #nav-edit-panel,
+html.dark-mode .nav-logo-menu {
+  background: #202020;
+  color: #eee;
+}
+html.dark-mode .nav-edit-row,
+html.dark-mode .nav-logo-menu button {
+  background: #292929;
+  color: #eee;
+  border-color: #444;
+}
+html.dark-mode #nav-edit-panel p {
+  color: #aaa;
+}
+@media (max-width: 768px) {
+  #nav-edit-panel {
+    top: 64px;
+    right: 12px;
+  }
+  .nav-edit-control {
+    right: 4px;
+  }
+}
+
+/* PATCH v7 — o botão mestre é o único controle inicial do cartão. */
+body:not(.edit-mode-ativo) .ee-grupo-btn,
+body:not(.edit-mode-ativo) .ee-img-btn-g,
+body:not(.edit-mode-ativo) .ee-text-btn-g,
+body:not(.edit-mode-ativo) .ee-recuperar-btn-g,
+body:not(.edit-mode-ativo) .ee-grupo-menu {
+  display: none !important;
+}
+.ee-grupo-menu .ee-opcao-desfazer {
+  color: #e67e22;
+  border-top: 1px solid #eee;
+}
+.ee-grupo-menu .ee-opcao-desfazer:hover {
+  color: #d35400;
+  background: #fff8ef;
+}
+/* Filhos continuam ocultos até a modalidade ser escolhida no menu mestre. */
+body.edit-mode-ativo .ee-img-btn-g,
+body.edit-mode-ativo .ee-text-btn-g,
+body.edit-mode-ativo .ee-recuperar-btn-g {
+  display: none;
+}
+body.edit-mode-ativo .ee-grupo-modo-imagem .ee-img-btn-g {
+  display: flex;
+}
+body.edit-mode-ativo .ee-grupo-modo-texto .ee-text-btn-g,
+body.edit-mode-ativo .ee-grupo-modo-texto .ee-recuperar-btn-g {
+  display: flex;
+}
+
+/* PATCH v8 — mestre independente, sem vínculo com carrossel */
+.ee-conjunto-editavel {
+  position: relative;
+}
+.ee-conjunto-btn {
+  display: none;
+  position: absolute;
+  top: -30px;
+  right: 8px;
+  width: 30px;
+  height: 30px;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 50%;
+  background: #2ecc71;
+  color: #fff;
+  font-size: 20px;
+  font-weight: 800;
+  cursor: pointer;
+  z-index: 80;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+body.edit-mode-ativo .ee-conjunto-btn {
+  display: flex;
+}
+.ee-conjunto-menu {
+  display: none;
+  position: absolute;
+  top: 4px;
+  right: 8px;
+  min-width: 180px;
+  background: #fff;
+  border-radius: 9px;
+  overflow: hidden;
+  z-index: 81;
+  box-shadow: 0 7px 22px rgba(0, 0, 0, 0.2);
+}
+.ee-conjunto-menu.aberto {
+  display: block;
+}
+.ee-conjunto-menu button {
+  display: block;
+  width: 100%;
+  padding: 10px 14px;
+  border: 0;
+  background: #fff;
+  text-align: left;
+  font:
+    600 13px "Montserrat",
+    sans-serif;
+  color: #333;
+  cursor: pointer;
+}
+.ee-conjunto-menu button:hover {
+  background: #f0fdf8;
+  color: #1abc9c;
+}
+.ee-conjunto-menu .ee-conjunto-desfazer {
+  border-top: 1px solid #eee;
+  color: #e67e22;
+}
+body.edit-mode-ativo .ee-conjunto-editavel .ee-img-btn-g,
+body.edit-mode-ativo .ee-conjunto-editavel .ee-text-btn-g,
+body.edit-mode-ativo .ee-conjunto-editavel .ee-recuperar-btn-g {
+  display: none !important;
+}
+body.edit-mode-ativo .ee-conjunto-editavel.ee-conjunto-imagem .ee-img-btn-g {
+  display: flex !important;
+}
+body.edit-mode-ativo .ee-conjunto-editavel.ee-conjunto-texto .ee-text-btn-g,
+body.edit-mode-ativo
+  .ee-conjunto-editavel.ee-conjunto-texto
+  .ee-recuperar-btn-g {
+  display: flex !important;
+}
+html.dark-mode .ee-conjunto-menu,
+html.dark-mode .ee-conjunto-menu button {
+  background: #222;
+  color: #eee;
+}
+@media (max-width: 768px) {
+  .ee-conjunto-btn {
+    top: -26px;
+    right: 4px;
+  }
+  .ee-conjunto-menu {
+    right: 4px;
+  }
+}
+
+/* PATCH v10 — botão de imagem visível no canto da foto e mestre mais baixo */
+body.edit-mode-ativo .ee-conjunto-editavel.ee-conjunto-imagem .ee-img-btn-g {
+  top: 8px !important;
+  right: 8px !important;
+  z-index: 70 !important;
+}
+.ee-img-menu .ee-restaurar {
+  color: #e67e22;
+}
+.ee-img-menu .ee-restaurar:hover {
+  color: #d35400;
+  background: #fff8ef;
+}
+.ee-conjunto-btn {
+  top: -8px;
+}
+@media (max-width: 768px) {
+  .ee-conjunto-btn {
+    top: -4px;
+  }
+}
+
+/* PATCH v11 — cancelamento explícito e controles sempre recuperáveis */
+.ee-conjunto-menu .ee-conjunto-cancelar {
+  color: #777;
+  border-top: 1px solid #eee;
+}
+.ee-conjunto-menu .ee-conjunto-cancelar:hover {
+  color: #333;
+  background: #f5f5f5;
+}
+
+/* PATCH v12 — carrossel finalizado não deixa controle flutuante */
+.card-carousel.ee-carrossel-finalizado .ee-carrossel-btn,
+.card-carousel.ee-carrossel-finalizado .ee-carrossel-menu {
+  display: none !important;
+}
+.ee-carrossel-menu .ee-carrossel-cancelar {
+  color: #777;
+  border-top: 1px solid #eee;
+}
+.ee-carrossel-menu .ee-carrossel-cancelar:hover {
+  color: #333;
+  background: #f5f5f5;
+}
+html.dark-mode .ee-carrossel-menu .ee-carrossel-cancelar {
+  color: #bbb;
+}
+
+/* PATCH v13 — confirmação ✓, recuperação ↺ e cancelamento − */
+.ee-cancel-text-btn {
+  display: none;
+  position: absolute;
+  top: 50%;
+  right: 52px;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 1px solid #777;
+  border-radius: 4px;
+  background: #fff;
+  color: #777;
+  font:
+    800 15px/1 "Montserrat",
+    sans-serif;
+  cursor: pointer;
+  z-index: 40;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+[contenteditable="true"] > .ee-cancel-text-btn {
+  display: flex;
+}
+.ee-cancel-text-btn:hover {
+  background: #777;
+  color: #fff;
+}
+.ee-img-menu .ee-cancelar-imagem {
+  color: #777;
+  border-top: 1px solid #eee;
+}
+.ee-img-menu .ee-cancelar-imagem:hover {
+  color: #333;
+  background: #f5f5f5;
+}
+
+/* PATCH v14 — após confirmar/cancelar, volta ao quadrado verde + */
+.ee-text-btn.ee-confirmado {
+  background: #2ecc71 !important;
+  border-color: #2ecc71 !important;
+  color: #fff !important;
+  box-shadow: 0 2px 8px rgba(46, 204, 113, 0.28);
+}
+.ee-cancel-text-btn {
+  background: #fff;
+}
+/* O botão CHEFE do carrossel é o único que permanece após finalizar. */
+.card-carousel .ee-carrossel-btn {
+  border-radius: 14px;
+}
+
+/* ============================================================
+   PATCH v15 — BOTÃO CHEFE DOS CARDS ODS
+   ============================================================ */
+.ods-master-btn {
+  display: none;
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: #2ecc71;
+  color: #fff;
+  border: none;
+  font-size: 16px;
+  font-weight: 800;
+  cursor: pointer;
+  z-index: 60;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+body.edit-mode-ativo .ods-master-btn {
+  display: flex;
+}
+
+.ods-master-menu {
+  display: none;
+  position: absolute;
+  top: 18px;
+  right: -10px;
+  min-width: 160px;
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  z-index: 61;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+.ods-master-menu.aberto {
+  display: block;
+}
+.ods-master-menu button {
+  display: block;
+  width: 100%;
+  padding: 10px 14px;
+  border: none;
+  background: #fff;
+  text-align: left;
+  font:
+    600 13px "Montserrat",
+    sans-serif;
+  color: #333;
+  cursor: pointer;
+}
+.ods-master-menu button:hover {
+  background: #f0fdf8;
+  color: #1abc9c;
+}
+
+/* Botão de imagem: aparece só quando "Editar imagem" é escolhido,
+   posicionado DENTRO da foto (sem ser cortado pelo overflow hidden) */
+.ods-card.ee-ods-modo-imagem .ee-img-btn-g {
+  display: flex !important;
+  top: 8px !important;
+  right: 8px !important;
+  z-index: 55 !important;
+}
+
+/* Botão de texto: fica à esquerda do card, sem precisar virar */
+.ods-text-edit-btn {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: -34px;
+  transform: translateY(-50%);
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: #1abc9c;
+  color: #fff;
+  border: none;
+  font-size: 15px;
+  font-weight: 800;
+  cursor: pointer;
+  z-index: 55;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+.ods-card.ee-ods-modo-texto .ods-text-edit-btn {
+  display: flex;
+}
+
+html.dark-mode .ods-master-menu,
+html.dark-mode .ods-master-menu button {
+  background: #222;
+  color: #eee;
+}
+html.dark-mode .ods-master-menu button:hover {
+  color: #2ecc71;
+}
+
+/* ============================================================
+   PATCH v16 — BOTÃO CHEFE (estilo carrossel) NOS CARDS ODS
+   ============================================================ */
+.ods-card.ee-conjunto-editavel .ee-conjunto-btn {
+  top: -10px;
+  right: -10px;
+}
+.ods-card.ee-conjunto-editavel .ee-conjunto-menu {
+  top: 18px;
+  right: -10px;
+}
+
+body.edit-mode-ativo .ods-card.ee-conjunto-imagem .ods-card-inner {
+  transform: none !important;
+  transition: none !important;
+}
+body.edit-mode-ativo .ods-card.ee-conjunto-imagem .ods-card-front {
+  overflow: visible;
+}
+
+body.edit-mode-ativo .ods-card.ee-conjunto-texto .ods-card-inner {
+  transform: rotateY(180deg) !important;
+  transition: none !important;
+}
+
+body:not(.edit-mode-ativo) .ods-card.ee-ods-excluido {
+  display: none;
+}
+body.edit-mode-ativo .ods-card.ee-ods-excluido {
+  opacity: 0.35;
+  outline: 2px dashed #e74c3c;
+  outline-offset: 4px;
+}
+
+/* Impede o flip 3D dos cards ODS enquanto o modo de edição está ativo */
+body.edit-mode-ativo .ods-card:hover .ods-card-inner {
+  transform: none;
+}
+
+/* ============================================================
+   PATCH v17 — ODS: BOTÃO CHEFE ÚNICO + botões por card
+   ============================================================ */
+.ee-ods-conjunto {
+  position: relative;
+}
+.ee-ods-conjunto .ee-conjunto-btn {
+  top: -32px;
+  right: 0;
+}
+.ee-ods-conjunto .ee-conjunto-menu {
+  top: -6px;
+  right: 0;
+}
+
+/* Botão de imagem por card: só aparece se o modo "imagem" foi escolhido no chefe */
+body.edit-mode-ativo
+  .ee-ods-conjunto.ee-conjunto-imagem
+  .ods-card
+  .ee-img-btn-g {
+  display: flex !important;
+  top: 8px;
+  right: 8px;
+  z-index: 55;
+}
+
+/* Botão de texto por card: só aparece se o modo "texto" foi escolhido no chefe */
+body.edit-mode-ativo
+  .ee-ods-conjunto.ee-conjunto-texto
+  .ods-card
+  .ee-text-btn-g,
+body.edit-mode-ativo
+  .ee-ods-conjunto.ee-conjunto-texto
+  .ods-card
+  .ee-recuperar-btn-g {
+  display: flex !important;
+}
+
+/* Evita o flip 3D atrapalhar cliques durante a edição */
+body.edit-mode-ativo .ods-card:hover .ods-card-inner {
+  transform: none;
+}
+
+/* Enquanto em modo texto, mostra o verso do card pra dar pra editar num/desc */
+body.edit-mode-ativo
+  .ee-ods-conjunto.ee-conjunto-texto
+  .ods-card
+  .ods-card-inner {
+  transform: rotateY(180deg);
+}
+
+/* PATCH FINAL — controles ODS limpos */
+/* Os controles dos cartões só aparecem após escolher um modo no mestre. */
+.ee-ods-conjunto > .ee-conjunto-btn.ee-ods-mestre-unico {
+  top: 8px !important;
+  right: 0 !important;
+  z-index: 80;
+}
+.ee-ods-conjunto > .ee-conjunto-menu {
+  top: 44px !important;
+  right: 0 !important;
+  z-index: 81;
+}
+.ee-ods-conjunto .ods-card > .ee-conjunto-btn,
+.ee-ods-conjunto .ods-card > .ee-conjunto-menu,
+.ee-ods-conjunto .ods-master-btn,
+.ee-ods-conjunto .ods-master-menu,
+.ee-ods-conjunto .ods-text-edit-btn {
+  display: none !important;
+}
+.ee-ods-conjunto .ods-card .ee-img-btn-g {
+  top: 8px !important;
+  right: 8px !important;
+  z-index: 70 !important;
+}
+.ee-ods-text-area {
+  padding-right: 54px !important;
+}
+.ee-ods-text-area .ee-text-btn-g {
+  right: 23px !important;
+}
+.ee-ods-text-area .ee-recuperar-btn-g {
+  right: 0px !important;
+}
+.ee-ods-conjunto .ee-ods-text-area .ee-recuperar-btn-g {
+  right: 30px !important; /* Posiciona o botão de restaurar logo ao lado do botão (+) */
+  left: auto !important; /* Cancela qualquer alinhamento prévio à esquerda */
+  position: absolute;
+}
+/* Força o reposicionamento do botão de adicionar (+) */
+.ee-ods-conjunto .ods-card .ee-ods-text-area .ee-text-btn-g,
+.ee-ods-conjunto .ee-ods-text-area > .ee-text-btn-g {
+  position: absolute !important;
+  right: 10px !important;
+  left: auto !important;
+}
+.ee-ods-conjunto .ee-ods-text-control,
+.ee-ods-conjunto .ee-ods-restore-control {
+  z-index: 70 !important;
+}
+
+/* ============================================================
+   PATCH v18 — botão/menu de imagem ODS não fica mais cortado
+   ============================================================ */
+.ods-card {
+  overflow: visible;
+}
+
+.ods-card > .ee-img-btn-g {
+  z-index: 90 !important;
+}
+
+.ods-card > .ee-img-menu {
+  z-index: 91 !important;
+  min-width: 170px;
+}
+
+/* PATCH v19 — botão mestre dos cartões de iniciativa, à esquerda
+   pra não brigar com os selos ODS que ficam à direita do cabeçalho */
+.iniciativa-card.ee-conjunto-editavel > .ee-conjunto-btn {
+  top: 8px;
+  left: 8px;
+  right: auto;
+}
+.iniciativa-card.ee-conjunto-editavel > .ee-conjunto-menu {
+  top: 44px;
+  left: 8px;
+  right: auto;
+}
+
+/* ============================================================
+   ESTILIZAÇÃO MINIMALISTA DO PAINEL LOCAL (IMUNE A ROLAGEM)
+   ============================================================ */
+
+/* Anula qualquer lixo ou menu quebrado da nav superior */
+.nav-actions .ee-admin-dropdown,
+.nav-actions .ee-admin-dropdown-header,
+.nav-actions .ee-admin-opt,
+.nav-actions input[type="file"] {
+  display: none !important;
+}
+
+/* Container do botão minimalista (Injetado acima dos cards) */
+.ee-secao-panel-container {
+  display: none; /* Oculto no site público */
+  max-width: 1100px !important;
+  width: 90% !important;
+  margin: 15px auto -15px auto !important;
+  position: relative !important;
+  /* z-index: 900 garante que passe POR BAIXO do menu fixo (z-index: 1000) na rolagem */
+  z-index: 900 !important;
+  font-family: "Montserrat", sans-serif !important;
+}
+
+/* Exibe somente quando o modo de edição geral (lápis) está ligado */
+.ee-secao-panel-container.ee-painel-visivel {
+  display: flex !important;
+  justify-content: flex-end !important;
+}
+
+/* Estilo do botão minimalista de engrenagem */
+.ee-secao-panel-trigger {
+  background: #ffffff !important;
+  border: 1px solid #1abc9c !important;
+  color: #1abc9c !important;
+  padding: 8px 18px !important;
+  font-family: "Montserrat", sans-serif !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  border-radius: 20px !important;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05) !important;
+}
+
+.ee-secao-panel-trigger:hover,
+.ee-secao-panel-trigger.ee-trigger-ativo {
+  background: #1abc9c !important;
+  color: white !important;
+}
+
+/* Caixa suspensa discreta (Dropdown que abre para baixo do botão) */
+.ee-secao-dropdown-box {
+  display: none;
+  position: absolute;
+  top: 42px;
+  right: 0;
+  width: 180px;
+  background: #ffffff !important;
+  border: 1px solid #d4ede6 !important;
+  border-radius: 8px !important;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1) !important;
+  padding: 5px !important;
+  z-index: 910 !important;
+}
+
+.ee-secao-dropdown-box.ee-aberto {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 2px !important;
+}
+
+.ee-panel-title {
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  color: #94a3b8 !important;
+  padding: 4px 6px !important;
+  border-bottom: 1px solid #f1f5f9 !important;
+  margin-bottom: 2px !important;
+  letter-spacing: 0.03em;
+}
+
+.ee-local-opt {
+  background: transparent !important;
+  border: none !important;
+  padding: 8px 10px !important;
+  text-align: left !important;
+  font-family: "Montserrat", sans-serif !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  color: #444444 !important;
+  cursor: pointer !important;
+  border-radius: 4px !important;
+  width: 100% !important;
+}
+
+.ee-local-opt:hover {
+  background: #f0fdf8 !important;
+  color: #1abc9c !important;
+}
+
+.ee-opt-cancel {
+  color: #e74c3c !important;
+  border-top: 1px solid #fdeceb !important;
+  margin-top: 2px !important;
+}
+
+/* Suporte ao Modo Escuro nativo */
+html.dark-mode .ee-secao-dropdown-box {
+  background-color: #1e1e1e !important;
+  border-color: #2a2a2a !important;
+}
+html.dark-mode .ee-local-opt {
+  color: #cccccc !important;
+}
+html.dark-mode .ee-local-opt:hover {
+  background-color: #2a2a2a !important;
+}
+
+/* ────────────────────────────────────────────────────────────
+   BLOQUEIO DE BOTÕES ANTIGOS E POSICIONAMENTO INTERNO DOS CARDS
+   ──────────────────────────────────────────────────────────── */
+.iniciativa-card .ee-card-panel-btn,
+.iniciativa-card .ee-card-panel-dropdown,
+.iniciativa-card .ee-carrossel-btn,
+.iniciativa-card .ee-carrossel-menu,
+.iniciativa-card .ee-text-btn,
+.iniciativa-card .ee-recuperar-btn,
+.iniciativa-card .ee-cancel-text-btn,
+.iniciativa-card .ee-img-btn,
+.iniciativa-card .ee-img-menu,
+.iniciativa-card .ee-slide-remove,
+.iniciativa-card .ee-add-tile {
+  display: none !important;
+}
+.iniciativa-card .ee-conjunto-btn,
+.iniciativa-card .ee-conjunto-menu {
+  display: none !important;
+}
+
+.iniciativa-card h3,
+.iniciativa-card p {
+  position: relative !important;
+  padding-right: 48px !important;
+}
+
+/* MODO TEXTO: Configuração padrão */
+body.global-modo-texto .iniciativa-card h3 .ee-text-btn,
+body.global-modo-texto .iniciativa-card h3 .ee-recuperar-btn,
+body.global-modo-texto .iniciativa-card h3 .ee-cancel-text-btn,
+body.global-modo-texto .iniciativa-card p .ee-text-btn,
+body.global-modo-texto .iniciativa-card p .ee-recuperar-btn,
+body.global-modo-texto .iniciativa-card p .ee-cancel-text-btn {
+  display: flex !important;
+}
+.iniciativa-card h3 .ee-text-btn,
+.iniciativa-card p .ee-text-btn {
+  top: 50% !important;
+  right: 0px !important;
+  transform: translateY(-50%) !important;
+  background-color: #2ecc71 !important;
+  border-color: #2ecc71 !important;
+  color: white !important;
+}
+.iniciativa-card h3 .ee-recuperar-btn,
+.iniciativa-card p .ee-recuperar-btn {
+  top: 50% !important;
+  right: 24px !important;
+  transform: translateY(-50%) !important;
+  background-color: #e67e22 !important;
+  border-color: #e67e22 !important;
+  color: white !important;
+}
+
+/* MODO FOTOS: Configuração padrão */
+body.global-modo-fotos .iniciativa-card .card-carousel .ee-slide-remove,
+body.global-modo-fotos .iniciativa-card .card-carousel .ee-add-tile {
+  display: flex !important;
+}
+.iniciativa-card .ee-add-tile {
+  background: rgba(26, 188, 156, 0.1) !important;
+  border: 2px dashed #1abc9c !important;
+  color: #1abc9c !important;
+}
+
+/* ============================================================
+   MINIMALISMO EXCLUSIVO PARA ALTERAÇÃO DAS IMAGENS DAS ODS
+   ============================================================ */
+body.global-modo-ods .iniciativa-card .ods-badges .ee-img-btn,
+body.global-modo-ods .iniciativa-card .ods-badges .ee-img-menu {
+  display: flex !important;
+}
+
+/* Reduz o tamanho do botão (+) verde das ODS para ficar delicado sobre o selo redondo */
+body.global-modo-ods .iniciativa-card .ods-badges .ee-img-btn {
+  display: flex !important;
+  position: absolute !important;
+  top: -5px !important;
+  right: -5px !important;
+  width: 15px !important; /* Reduzido de 18px para 15px */
+  height: 15px !important; /* Reduzido de 18px para 15px */
+  font-size: 10px !important; /* Fonte menor */
+  background-color: #2ecc71 !important;
+  color: white !important;
+  border-radius: 50%;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Encolhe e estiliza o menu de opções (Adicionar/Remover) específico das ODS */
+body.global-modo-ods .iniciativa-card .ods-badges .ee-img-menu {
+  top: 14px !important;
+  right: -5px !important;
+  width: 120px !important; /* Menu bem mais estreito (era 170px) */
+  min-width: 300px !important;
+  padding: 2px !important;
+  border-radius: 6px !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12) !important;
+  z-index: 99999 !important;
+}
+
+/* Deixa as fontes dos botões internos do menu das ODS menores e compactas */
+body.global-modo-ods .iniciativa-card .ods-badges .ee-img-menu button {
+  padding: 6px 10px !important; /* Espaçamento interno menor */
+  font-size: 11px !important; /* Texto menor e sutil */
+  font-weight: 600 !important;
+}
+
+
+/* PATCH 0909 — nenhum símbolo cobre letras ou palavras */
+/* Reserva uma área externa à direita de qualquer texto editável. */
+body.edit-mode-ativo .ee-text-btn,
+body.edit-mode-ativo .ee-recuperar-btn,
+body.edit-mode-ativo .ee-cancel-text-btn {
+  transform: translateY(-50%) !important;
+  z-index: 120 !important;
+}
+body.edit-mode-ativo .ee-text-btn { right: -28px !important; }
+body.edit-mode-ativo .ee-recuperar-btn { right: -52px !important; }
+body.edit-mode-ativo .ee-cancel-text-btn { right: -76px !important; }
+body.edit-mode-ativo h1, body.edit-mode-ativo h2, body.edit-mode-ativo h3,
+body.edit-mode-ativo h4, body.edit-mode-ativo p, body.edit-mode-ativo li,
+body.edit-mode-ativo blockquote, body.edit-mode-ativo td { overflow: visible !important; }
+
+/* No card de iniciativa, não comprime nem cobre o texto: os símbolos ficam no vão externo. */
+.iniciativa-card h3, .iniciativa-card p { padding-right: 0 !important; overflow: visible !important; }
+.iniciativa-card .ee-text-btn { right: -28px !important; }
+.iniciativa-card .ee-recuperar-btn { right: -52px !important; }
+.iniciativa-card .ee-cancel-text-btn { right: -76px !important; }
+
+/* O único comando de texto do carrossel aparece no menu do botão CHEFE. */
+.ee-carrossel-menu .ee-carrossel-texto,
+.ee-carrossel-menu .ee-carrossel-texto-cancelar { color: #1abc9c; border-top: 1px solid #edf5f2; }
+.ee-carrossel-menu .ee-carrossel-texto-cancelar { color: #777; }
+
+/* Ao escolher Editar textos, todos os parágrafos daquele card usam os controles externos. */
+body.edit-mode-ativo .iniciativa-card.ee-carrossel-texto-ativo .ee-text-btn,
+body.edit-mode-ativo .iniciativa-card.ee-carrossel-texto-ativo .ee-recuperar-btn,
+body.edit-mode-ativo .iniciativa-card.ee-carrossel-texto-ativo .ee-cancel-text-btn {
+  display: flex !important;
+}
+body.edit-mode-ativo .iniciativa-card:not(.ee-carrossel-texto-ativo) .ee-text-btn,
+body.edit-mode-ativo .iniciativa-card:not(.ee-carrossel-texto-ativo) .ee-recuperar-btn,
+body.edit-mode-ativo .iniciativa-card:not(.ee-carrossel-texto-ativo) .ee-cancel-text-btn {
+  display: none !important;
+}
+
+
+/* PATCH 0910 — botão único de textos do carrossel */
+.iniciativa-card { position: relative !important; overflow: visible !important; }
+.ee-card-texto-btn {
+  display: none;
+  position: absolute;
+  top: 8px;
+  left: 96px;
+  z-index: 120;
+  padding: 6px 10px;
+  border: 1px solid #1abc9c;
+  border-radius: 14px;
+  background: #fff;
+  color: #1abc9c;
+  font: 700 11px/1.2 'Montserrat', sans-serif;
+  cursor: pointer;
+  box-shadow: 0 2px 7px rgba(0,0,0,.14);
+  white-space: nowrap;
+}
+body.edit-mode-ativo .ee-card-texto-btn { display: flex; }
+.ee-card-texto-btn:hover,
+.iniciativa-card.ee-carrossel-texto-ativo .ee-card-texto-btn {
+  background: #1abc9c;
+  color: #fff;
+}
+
+
+/* PATCH 0911 — botão acima do conteúdo, sem cobrir o título */
+.ee-card-texto-btn {
+  top: -30px !important;
+  left: 96px !important;
+  transform: none !important;
+}
+.iniciativa-card.ee-carrossel-texto-ativo > .ee-card-texto-btn { display: none !important; }
+
+
+/* PATCH 0912 — nenhum botão de texto flutuante sobre o carrossel */
+.ee-card-texto-btn[hidden],
+.iniciativa-card > .ee-card-texto-btn { display: none !important; }
+.ee-carrossel-menu .ee-carrossel-texto {
+  display: block !important;
+  position: static !important;
+  width: 100% !important;
+  transform: none !important;
+  margin: 0 !important;
+  text-align: left !important;
+}
+
+
+/* PATCH 0914 — os modos só ativam após escolha no botão CHEFE */
+.ee-carrossel-menu .ee-carrossel-imagens { color: #1abc9c; border-top: 1px solid #edf5f2; }
+.ee-carrossel-menu .ee-carrossel-texto { color: #1abc9c; }
+.iniciativa-card.ee-carrossel-imagem-ativo .card-carousel-slide { overflow: visible !important; }
+body.edit-mode-ativo .iniciativa-card.ee-carrossel-imagem-ativo .card-carousel-slide .ee-img-btn,
+body.edit-mode-ativo .iniciativa-card.ee-carrossel-imagem-ativo .card-carousel-slide .ee-img-btn-g {
+  display: flex !important;
+  position: absolute !important;
+  top: 8px !important;
+  right: 8px !important;
+  z-index: 160 !important;
+}
+body.edit-mode-ativo .iniciativa-card.ee-carrossel-imagem-ativo .card-carousel-slide .ee-img-menu {
+  display: none;
+  position: absolute !important;
+  top: 40px !important;
+  right: 8px !important;
+  z-index: 161 !important;
+}
+body.edit-mode-ativo .iniciativa-card.ee-carrossel-imagem-ativo .card-carousel-slide .ee-img-menu.ee-aberto { display: block !important; }
+body.edit-mode-ativo .iniciativa-card:not(.ee-carrossel-texto-ativo) .ee-text-btn,
+body.edit-mode-ativo .iniciativa-card:not(.ee-carrossel-texto-ativo) .ee-recuperar-btn,
+body.edit-mode-ativo .iniciativa-card:not(.ee-carrossel-texto-ativo) .ee-cancel-text-btn { display: none !important; }
+
+
+/* PATCH 0915 — botões de imagem do carrossel ativos e clicáveis */
+.iniciativa-card.ee-carrossel-imagem-ativo .card-carousel-slide { overflow: visible !important; }
+.iniciativa-card.ee-carrossel-imagem-ativo .card-carousel-slide .ee-carousel-image-control {
+  display: flex !important;
+  position: absolute !important;
+  top: 8px !important;
+  right: 8px !important;
+  width: 26px !important;
+  height: 26px !important;
+  align-items: center !important;
+  justify-content: center !important;
+  z-index: 300 !important;
+  pointer-events: auto !important;
+}
+.iniciativa-card.ee-carrossel-imagem-ativo .card-carousel-slide .ee-carousel-image-menu {
+  z-index: 301 !important;
+  pointer-events: auto !important;
+}
+
+
+/* PATCH 0916 — botão original de edição de imagem */
+.iniciativa-card.ee-carrossel-imagem-ativo .ee-img-btn-original {
+  display: flex !important;
+  position: absolute !important;
+  top: 8px !important;
+  right: 8px !important;
+  width: 26px !important;
+  height: 26px !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border: 0 !important;
+  border-radius: 50% !important;
+  background: #2ecc71 !important;
+  color: #fff !important;
+  font-size: 18px !important;
+  font-weight: 800 !important;
+  z-index: 500 !important;
+  cursor: pointer !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,.25) !important;
+}
+.iniciativa-card.ee-carrossel-imagem-ativo .ee-img-menu-original {
+  display: none;
+  position: absolute !important;
+  top: 40px !important;
+  right: 8px !important;
+  min-width: 170px !important;
+  z-index: 501 !important;
+}
+.iniciativa-card.ee-carrossel-imagem-ativo .ee-img-menu-original.ee-aberto { display: block !important; }
+
+
+/* PATCH 0917 — controles exclusivos do carrossel Alimentos com Afeto */
+.ee-alimentos-img-btn {
+  display: flex !important;
+  position: absolute !important;
+  top: 8px !important;
+  right: 8px !important;
+  width: 26px !important;
+  height: 26px !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border: 0 !important;
+  border-radius: 50% !important;
+  background: #2ecc71 !important;
+  color: #fff !important;
+  font-size: 18px !important;
+  font-weight: 800 !important;
+  z-index: 900 !important;
+  cursor: pointer !important;
+}
+.ee-alimentos-img-menu { display: none; position: absolute !important; top: 40px !important; right: 8px !important; min-width: 180px !important; z-index: 901 !important; }
+.ee-alimentos-img-menu.ee-aberto { display: block !important; }
+
+
+/* PATCH 0918 — modo Alterar fotos unificado */
+body.edit-mode-ativo.global-modo-fotos .iniciativa-card .card-carousel-slide { overflow: visible !important; }
+body.edit-mode-ativo.global-modo-fotos .iniciativa-card .ee-unified-photo-btn {
+  display: flex !important; position: absolute !important; top: 8px !important; right: 8px !important;
+  width: 26px !important; height: 26px !important; align-items: center !important; justify-content: center !important;
+  border: 0 !important; border-radius: 50% !important; background: #2ecc71 !important; color: #fff !important;
+  font-weight: 800 !important; font-size: 18px !important; z-index: 500 !important; cursor: pointer !important;
+}
+body.edit-mode-ativo.global-modo-fotos .iniciativa-card .ee-unified-photo-menu {
+  display: none; position: absolute !important; top: 40px !important; right: 8px !important; z-index: 501 !important; min-width: 170px !important;
+}
+body.edit-mode-ativo.global-modo-fotos .iniciativa-card .ee-unified-photo-menu.ee-aberto { display: block !important; }
+body.edit-mode-ativo.global-modo-fotos .iniciativa-card .ods-badges .ee-unified-ods-control {
+  display: flex !important; pointer-events: auto !important; z-index: 600 !important;
+}
+body.edit-mode-ativo.global-modo-fotos .iniciativa-card .ods-badges .ee-img-btn.ee-unified-ods-control,
+body.edit-mode-ativo.global-modo-fotos .iniciativa-card .ods-badges .ee-img-btn-g.ee-unified-ods-control {
+  position: absolute !important; top: -5px !important; right: -5px !important;
+}
+
+
+/* PATCH 0919 — somente o símbolo do carrossel fica visível */
+body.edit-mode-ativo.global-modo-fotos .iniciativa-card .ods-badges .ee-img-btn,
+body.edit-mode-ativo.global-modo-fotos .iniciativa-card .ods-badges .ee-img-btn-g,
+body.edit-mode-ativo.global-modo-fotos .iniciativa-card .ods-badges .ee-img-menu,
+body.edit-mode-ativo.global-modo-fotos .iniciativa-card .ods-badges .ee-unified-ods-control {
+  display: none !important;
+}
+body.edit-mode-ativo.global-modo-fotos .iniciativa-card .ee-unified-photo-btn {
+  display: flex !important;
+}
+
+
+/* PATCH 0920 — escolha visual do destino da alteração */
+.ee-photo-choice-modal {
+  position: fixed; inset: 0; z-index: 10000; display: flex; align-items: center; justify-content: center;
+  background: rgba(0,0,0,.35); font-family: 'Montserrat', sans-serif;
+}
+.ee-photo-choice-box {
+  width: min(360px, calc(100vw - 32px)); padding: 20px; background: #fff; border-radius: 12px;
+  box-shadow: 0 12px 35px rgba(0,0,0,.25); text-align: center;
+}
+.ee-photo-choice-box strong { display: block; margin-bottom: 16px; color: #333; font-size: 14px; }
+.ee-photo-choice-options { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+.ee-photo-choice-options button, .ee-photo-choice-cancel {
+  border: 0; border-radius: 8px; padding: 10px 16px; cursor: pointer; font-weight: 700; font-size: 13px;
+}
+.ee-photo-choice-options button { background: #1abc9c; color: #fff; }
+.ee-photo-choice-options button:hover { background: #159a80; }
+.ee-photo-choice-cancel { margin-top: 14px; background: #f1f1f1; color: #666; }
+
+
+/* PATCH 0921 — opções de ODS numeradas com miniaturas */
+.ee-photo-choice-options .ee-ods-choice-button {
+  width: 100%; min-height: 52px; display: flex; align-items: center; justify-content: flex-start;
+  gap: 10px; padding: 6px 10px; text-align: left; background: #f0fdf8; color: #176b5b;
+  border: 1px solid #c8eee3; border-radius: 8px;
+}
+.ee-photo-choice-options .ee-ods-choice-button:hover { background: #d9f8ef; }
+.ee-ods-choice-button img {
+  width: 38px; height: 38px; flex: 0 0 38px; object-fit: cover; border-radius: 5px;
+  border: 1px solid rgba(0,0,0,.12); background: #fff;
+}
+.ee-ods-choice-button span { font-weight: 800; font-size: 13px; }
+
+
+/* PATCH 0924 — estado concluído: nenhum símbolo permanece visível */
+body.ee-visual-controls-closed .ee-text-btn,
+body.ee-visual-controls-closed .ee-recuperar-btn,
+body.ee-visual-controls-closed .ee-cancel-text-btn,
+body.ee-visual-controls-closed .ee-img-btn,
+body.ee-visual-controls-closed .ee-img-btn-g,
+body.ee-visual-controls-closed .ee-slide-remove,
+body.ee-visual-controls-closed .ee-add-tile,
+body.ee-visual-controls-closed .ee-unified-photo-btn,
+body.ee-visual-controls-closed .ee-card-texto-btn,
+body.ee-visual-controls-closed .ee-carrossel-btn,
+body.ee-visual-controls-closed .ee-conjunto-btn,
+body.ee-visual-controls-closed .ee-photo-choice-modal {
+  display: none !important;
+}
+
+
+/* Correção: concluir também oculta todos os controles de imagem do card */
+.iniciativa-card.ee-card-controls-concluded .ee-img-btn,
+.iniciativa-card.ee-card-controls-concluded .ee-img-btn-g,
+.iniciativa-card.ee-card-controls-concluded .ee-img-btn-original,
+.iniciativa-card.ee-card-controls-concluded .ee-unified-photo-btn,
+.iniciativa-card.ee-card-controls-concluded .ee-alimentos-img-btn,
+.iniciativa-card.ee-card-controls-concluded .ee-slide-remove,
+.iniciativa-card.ee-card-controls-concluded .ee-add-tile,
+.iniciativa-card.ee-card-controls-concluded .ee-carrossel-btn,
+.iniciativa-card.ee-card-controls-concluded .ee-conjunto-btn {
+  display: none !important;
+}
+
+
+/* PATCH 0926 — o menos cancelado permanece oculto até nova edição */
+.ee-cancel-text-btn.ee-text-cancelado,
+body.edit-mode-ativo .ee-cancel-text-btn.ee-text-cancelado,
+body.global-modo-texto .ee-cancel-text-btn.ee-text-cancelado {
+  display: none !important;
+}
+
+
+/* PATCH 0927 — símbolos não atravessam nem ficam atrás de cards vizinhos */
+.iniciativa-card {
+  position: relative !important;
+  overflow: visible !important;
+  isolation: isolate;
+}
+.iniciativa-card.ee-carrossel-texto-ativo,
+.iniciativa-card.ee-carrossel-imagem-ativo {
+  z-index: 100 !important;
+}
+.iniciativa-card:not(.ee-carrossel-texto-ativo):not(.ee-carrossel-imagem-ativo) {
+  z-index: 1 !important;
+}
+.iniciativa-card h3,
+.iniciativa-card p {
+  position: relative !important;
+  overflow: visible !important;
+  padding-right: 0 !important;
+}
+.iniciativa-card h3 .ee-text-btn,
+.iniciativa-card p .ee-text-btn {
+  right: -28px !important;
+}
+.iniciativa-card h3 .ee-recuperar-btn,
+.iniciativa-card p .ee-recuperar-btn {
+  right: -52px !important;
+}
+.iniciativa-card h3 .ee-cancel-text-btn,
+.iniciativa-card p .ee-cancel-text-btn {
+  right: -76px !important;
+}
+.ee-text-cancelado { display: none !important; }
+
+
+/* PATCH 0928 — faixa fixa de controles dentro de cada card */
+/* A área reservada existe sempre, portanto o card não salta ao iniciar a edição. */
+.iniciativa-card h3,
+.iniciativa-card p {
+  position: relative !important;
+  box-sizing: border-box !important;
+  padding-right: 82px !important;
+  overflow: visible !important;
+}
+/* Os três controles permanecem dentro da própria largura do card. */
+.iniciativa-card h3 .ee-text-btn,
+.iniciativa-card p .ee-text-btn {
+  right: 54px !important;
+  z-index: 30 !important;
+}
+.iniciativa-card h3 .ee-recuperar-btn,
+.iniciativa-card p .ee-recuperar-btn {
+  right: 29px !important;
+  z-index: 30 !important;
+}
+.iniciativa-card h3 .ee-cancel-text-btn,
+.iniciativa-card p .ee-cancel-text-btn {
+  right: 4px !important;
+  z-index: 30 !important;
+}
+/* Todos os cards permanecem no mesmo plano; nenhum vizinho engole os símbolos. */
+body.edit-mode-ativo .iniciativa-card {
+  position: relative !important;
+  z-index: 20 !important;
+  isolation: isolate !important;
+}
+body.edit-mode-ativo .iniciativa-card h3,
+body.edit-mode-ativo .iniciativa-card p {
+  z-index: 21 !important;
+}
+
+
+/* PATCH 0929 — mestre do carrossel de entrevistas */
+.ee-entrevistas-master-area { position: relative; display: flex; justify-content: flex-end; margin: 0 0 12px; z-index: 300; }
+.ee-entrevistas-master { border: 1px solid #1abc9c; border-radius: 18px; padding: 7px 14px; background: #fff; color: #1abc9c; font: 700 12px 'Montserrat',sans-serif; cursor: pointer; }
+.ee-entrevistas-menu { display:none; position:absolute; top:40px; right:0; min-width:190px; padding:5px; background:#fff; border-radius:9px; box-shadow:0 8px 22px rgba(0,0,0,.18); z-index:301; }
+.ee-entrevistas-menu.ee-aberto { display:flex; flex-direction:column; gap:2px; }
+.ee-entrevistas-menu button { border:0; background:#fff; padding:9px 11px; text-align:left; font:600 12px 'Montserrat',sans-serif; cursor:pointer; border-radius:5px; }
+.ee-entrevistas-menu button:hover { background:#f0fdf8; color:#1abc9c; }
+.ee-entrevistas-texto-ativo .card-descricao { max-height:400px !important; outline:2px dashed #1abc9c; outline-offset:2px; }
+.ee-entrevistas-imagem-ativo .card-thumb { position:relative; overflow:visible; }
+.ee-entrevista-img-btn { position:absolute; top:8px; right:8px; width:26px; height:26px; border:0; border-radius:50%; background:#2ecc71; color:#fff; font-size:18px; font-weight:800; z-index:40; cursor:pointer; }
+.ee-entrevista-img-menu { display:none; position:absolute; top:40px; right:8px; min-width:165px; background:#fff; border-radius:8px; box-shadow:0 6px 18px rgba(0,0,0,.2); z-index:41; overflow:hidden; }
+.ee-entrevista-img-menu.ee-aberto { display:block; }
+.ee-entrevista-img-menu button { display:block; width:100%; border:0; background:#fff; padding:9px 11px; text-align:left; cursor:pointer; font:600 12px 'Montserrat',sans-serif; }
+.ee-entrevista-img-menu button:hover { background:#f0fdf8; color:#1abc9c; }
+
+
+/* PATCH 0930 — entrevistas: sem controles antes da escolha */
+.card-entrevista .ee-text-btn,
+.card-entrevista .ee-recuperar-btn,
+.card-entrevista .ee-cancel-text-btn,
+.card-entrevista .ee-img-btn,
+.card-entrevista .ee-img-btn-g,
+.card-entrevista .ee-conjunto-btn { display: none !important; }
+.ee-entrevistas-texto-ativo .card-entrevista .ee-text-btn,
+.ee-entrevistas-texto-ativo .card-entrevista .ee-recuperar-btn,
+.ee-entrevistas-texto-ativo .card-entrevista .ee-cancel-text-btn { display: flex !important; }
+.ee-entrevistas-texto-ativo .card-entrevista .ee-text-btn.ee-text-cancelado,
+.ee-entrevistas-texto-ativo .card-entrevista .ee-cancel-text-btn.ee-text-cancelado { display: none !important; }
+/* Saiba mais fica no fluxo normal quando o modo texto não está ativo. */
+.card-entrevista .card-descricao { transition: max-height .3s ease; }
+.card-entrevista .btn-saiba-mais { position: relative; margin-top: 8px; }
+.ee-entrevistas-texto-ativo .card-entrevista .btn-saiba-mais { display: none !important; }
+
+
+/* PATCH 0931 — entrevistas sem salto ao passar o mouse */
+.ee-entrevistas-texto-ativo .card-entrevista,
+.ee-entrevistas-imagem-ativo .card-entrevista {
+  transform: none !important;
+}
+.ee-entrevistas-texto-ativo .card-entrevista:hover,
+.ee-entrevistas-imagem-ativo .card-entrevista:hover {
+  transform: none !important;
+}
+.ee-entrevistas-texto-ativo .card-descricao {
+  position: relative !important;
+  min-height: 150px !important;
+  max-height: 400px !important;
+  padding-right: 92px !important;
+  overflow: visible !important;
+}
+.ee-interview-text-plus,
+.ee-interview-text-restore,
+.ee-interview-text-cancel {
+  display: none !important;
+  position: absolute !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  width: 22px !important;
+  height: 22px !important;
+  align-items: center !important;
+  justify-content: center !important;
+  z-index: 80 !important;
+}
+.ee-entrevistas-texto-ativo .ee-interview-text-plus { right: 58px !important; }
+.ee-entrevistas-texto-ativo .ee-interview-text-restore { right: 31px !important; }
+.ee-entrevistas-texto-ativo .ee-interview-text-cancel { right: 4px !important; }
+.ee-entrevistas-texto-ativo .btn-saiba-mais {
+  visibility: hidden !important;
+  pointer-events: none !important;
+  min-height: 20px !important;
+}
+
+
+/* PATCH 0932 — mestre oculto até o editor geral e controles sempre à frente */
+.ee-entrevistas-master-area { display: none !important; position: relative !important; z-index: 10000 !important; }
+body.edit-mode-ativo .ee-entrevistas-master-area { display: flex !important; }
+.ee-entrevistas-texto-ativo .card-entrevista { position: relative !important; z-index: 50 !important; overflow: visible !important; transform: none !important; }
+.ee-entrevistas-texto-ativo .card-descricao { position: relative !important; overflow: visible !important; padding-right: 92px !important; z-index: 60 !important; }
+.ee-entrevistas-texto-ativo .ee-interview-text-plus,
+.ee-entrevistas-texto-ativo .ee-interview-text-restore,
+.ee-entrevistas-texto-ativo .ee-interview-text-cancel {
+  display: flex !important; visibility: visible !important; opacity: 1 !important; pointer-events: auto !important;
+  z-index: 99999 !important; position: absolute !important;
+}
+.ee-entrevistas-texto-ativo .ee-interview-text-plus { right: 58px !important; }
+.ee-entrevistas-texto-ativo .ee-interview-text-restore { right: 31px !important; }
+.ee-entrevistas-texto-ativo .ee-interview-text-cancel { right: 4px !important; }
+.ee-entrevistas-texto-ativo .ee-interview-text-cancel.ee-text-cancelado { display: none !important; }
+
+
+/* PATCH 0934 — controles dos títulos fora do link e sem sobreposição */
+.card-entrevista { position: relative !important; overflow: visible !important; }
+.card-entrevista .link-titulo { position: relative !important; display: block !important; padding-right: 94px !important; overflow: visible !important; }
+.ee-interview-title-controls {
+  display: none; position: absolute; right: 10px; top: 50%; transform: translateY(-50%);
+  gap: 4px; z-index: 10000; background: #fff; padding: 3px; border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.14);
+}
+.ee-interview-title-controls button {
+  display: flex; align-items: center; justify-content: center; width: 21px; height: 21px;
+  border: 1px solid #1abc9c; border-radius: 4px; background: #fff; color: #1abc9c;
+  font: 800 12px/1 'Montserrat',sans-serif; cursor: pointer; pointer-events: auto;
+}
+.ee-interview-title-controls .ee-title-restore { color:#e67e22; border-color:#e67e22; }
+.ee-interview-title-controls .ee-title-cancel { color:#555; border-color:#aaa; }
+.ee-entrevistas-texto-ativo .card-entrevista .ee-interview-title-controls { display: flex !important; }
+.ee-entrevistas-texto-ativo .card-entrevista .link-titulo { z-index: 80 !important; }
+
+
+/* PATCH 0935 — símbolos de texto da equipe */
+#nossa-equipe .equipe-nome,
+#nossa-equipe .equipe-cargo,
+#nossa-equipe .equipe-secao-titulo { position: relative !important; overflow: visible !important; padding-right: 78px !important; }
+#nossa-equipe .ee-team-text-controls {
+  display: none; position: absolute; right: 2px; top: 50%; transform: translateY(-50%);
+  gap: 3px; align-items: center; z-index: 10000; white-space: nowrap;
+  background: #fff; border-radius: 5px; padding: 2px; box-shadow: 0 2px 7px rgba(0,0,0,.15);
+}
+body.edit-mode-ativo.global-modo-texto #nossa-equipe .ee-team-text-controls { display: flex !important; }
+#nossa-equipe .ee-team-text-controls button {
+  display: flex; align-items: center; justify-content: center; width: 21px; height: 21px;
+  padding: 0; border: 1px solid #1abc9c; border-radius: 4px; background: #fff;
+  color: #1abc9c; font: 800 12px/1 'Montserrat', sans-serif; cursor: pointer;
+  pointer-events: auto !important; z-index: 10001;
+}
+#nossa-equipe .ee-team-text-controls .ee-team-restore { color: #e67e22; border-color: #e67e22; }
+#nossa-equipe .ee-team-text-controls .ee-team-cancel { color: #555; border-color: #aaa; }
+#nossa-equipe .ee-team-text-controls .ee-team-cancel.ee-team-cancelled { display: none !important; }
+#nossa-equipe .equipe-item { position: relative; overflow: visible !important; z-index: 2; }
+body.edit-mode-ativo.global-modo-texto #nossa-equipe .equipe-item:hover { transform: none !important; }
+
+
+/* PATCH 0936 — equipe: faixa interna estável e sem controles duplicados */
+#nossa-equipe .equipe-item {
+  position: relative !important;
+  overflow: visible !important;
+  z-index: 10 !important;
+}
+/* O editor antigo não deve competir com os controles novos da equipe. */
+#nossa-equipe .equipe-nome > .ee-text-btn,
+#nossa-equipe .equipe-nome > .ee-recuperar-btn,
+#nossa-equipe .equipe-nome > .ee-cancel-text-btn,
+#nossa-equipe .equipe-cargo > .ee-text-btn,
+#nossa-equipe .equipe-cargo > .ee-recuperar-btn,
+#nossa-equipe .equipe-cargo > .ee-cancel-text-btn,
+#nossa-equipe .equipe-secao-titulo > .ee-text-btn,
+#nossa-equipe .equipe-secao-titulo > .ee-recuperar-btn,
+#nossa-equipe .equipe-secao-titulo > .ee-cancel-text-btn {
+  display: none !important;
+}
+#nossa-equipe .equipe-nome,
+#nossa-equipe .equipe-cargo {
+  width: 100% !important;
+  min-height: 28px !important;
+  padding-right: 78px !important;
+  overflow: visible !important;
+}
+#nossa-equipe .ee-team-text-controls {
+  right: 4px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  display: none !important;
+  position: absolute !important;
+  z-index: 99999 !important;
+}
+body.edit-mode-ativo.global-modo-texto #nossa-equipe .ee-team-text-controls {
+  display: flex !important;
+}
+/* Reserva física no texto: ativar o modo não altera as dimensões das imagens. */
+body.edit-mode-ativo.global-modo-texto #nossa-equipe .equipe-item img {
+  height: 260px !important;
+  flex-shrink: 0 !important;
+}
+body.edit-mode-ativo.global-modo-texto #nossa-equipe .equipe-item-contain img {
+  height: auto !important;
+}
+
+
+/* PATCH 0937 — somente Nossa equipe fica acima durante sua edição */
+#nossa-equipe { position: relative !important; overflow: visible !important; }
+#nossa-equipe .equipe-track,
+#nossa-equipe .equipe-secao,
+#nossa-equipe .equipe-secao-cards { overflow: visible !important; }
+#nossa-equipe.ee-team-text-active .equipe-item {
+  position: relative !important;
+  z-index: 1000 !important;
+  overflow: visible !important;
+  transform: none !important;
+}
+#nossa-equipe.ee-team-text-active .equipe-nome,
+#nossa-equipe.ee-team-text-active .equipe-cargo,
+#nossa-equipe.ee-team-text-active .equipe-secao-titulo {
+  overflow: visible !important;
+  position: relative !important;
+  z-index: 1001 !important;
+}
+#nossa-equipe.ee-team-text-active .ee-team-text-controls {
+  display: flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  pointer-events: auto !important;
+  z-index: 999999 !important;
+}
+
+
+/* PATCH 0938 — nenhum símbolo de edição nos títulos das seções */
+section h1 > .ee-text-btn,
+section h1 > .ee-recuperar-btn,
+section h1 > .ee-cancel-text-btn,
+section h1 > .ee-text-btn-g,
+section h1 > .ee-recuperar-btn-g,
+section h2 > .ee-text-btn,
+section h2 > .ee-recuperar-btn,
+section h2 > .ee-cancel-text-btn,
+section h2 > .ee-text-btn-g,
+section h2 > .ee-recuperar-btn-g { display: none !important; }
+
+
+/* PATCH 0939 — nomes da equipe centralizados */
+#nossa-equipe .equipe-nome,
+#nossa-equipe .equipe-cargo {
+  width: 100% !important;
+  text-align: center !important;
+  padding-left: 8px !important;
+  padding-right: 8px !important;
+  box-sizing: border-box !important;
+}
+/* Os controles ficam sobre uma faixa própria, sem alterar o centro do texto. */
+#nossa-equipe .ee-team-text-controls {
+  right: 4px !important;
+  padding: 2px !important;
+  width: max-content !important;
+}
+/* ============================================================
+   DOAÇÃO VIA PIX
+   ============================================================ */
+#doacao {
+  margin-top: 12px;
+}
+
+#doacao h3 {
+  color: #1abc9c;
+  font-size: 1.45rem;
+  margin-bottom: 6px;
+}
+
+.pix-doacao-box {
+  margin-top: 32px;
+  padding: 28px 30px;
+  text-align: center;
+  background: linear-gradient(
+    135deg,
+    rgba(26, 188, 156, 0.12),
+    rgba(46, 204, 113, 0.12)
+  );
+  border: 1px solid rgba(26, 188, 156, 0.28);
+  border-radius: 16px;
+}
+
+.pix-painel {
+  margin: 24px auto 0;
+  max-width: 420px;
+  background: #fff;
+  border-radius: 16px;
+  padding: 30px 26px 26px;
+  text-align: left;
+  position: relative;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+  animation: slideIn 0.3s;
+}
+
+.pix-painel[hidden] {
+  display: none;
+}
+
+.pix-fechar {
+  position: absolute;
+  top: 10px;
+  right: 14px;
+  background: none;
+  border: none;
+  color: #aaa;
+  font-size: 26px;
+  font-weight: bold;
+  line-height: 1;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.pix-fechar:hover {
+  color: #000;
+}
+
+.pix-form {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.pix-form label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  margin-top: 10px;
+}
+
+.pix-form input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: "Montserrat", sans-serif;
+  caret-color: #1abc9c;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.pix-form input:focus,
+.pix-form input:focus-visible {
+  outline: none;
+  border-color: #1abc9c;
+  box-shadow: none;
+}
+
+.pix-qrcode-area {
+  margin-top: 22px;
+  padding: 18px;
+  background: #fff6e5;
+  border: 1px dashed rgba(26, 188, 156, 0.4);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 12px;
+}
+
+.pix-qrcode-img {
+  width: 200px;
+  height: 200px;
+  border-radius: 8px;
+  background: #fff;
+  padding: 8px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+}
+
+.pix-instrucao {
+  font-size: 14px;
+  color: #555;
+  margin: 0;
+}
+
+.pix-form .btn-modal {
+  margin-top: 20px;
+}
+
+body.dark-mode .pix-painel {
+  background: #fff;
+}
+
+@media (max-width: 480px) {
+  .pix-painel {
+    padding: 24px 18px 20px;
+  }
+  .pix-qrcode-img {
+    width: 170px;
+    height: 170px;
+  }
