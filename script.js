@@ -230,75 +230,74 @@ if (btnDarkMode) {
 // DOAÇÃO VIA PIX (nova seção, abaixo de "Seja Voluntário(a)")
 // ============================================================
 
-// ATENÇÃO: troque "chave" pela chave Pix oficial da ONG (CPF/CNPJ, e-mail,
-// telefone ou chave aleatória) cadastrada no banco antes de publicar.
-// Sem uma chave real e válida, o QR Code é apenas ilustrativo.
-const PIX_CONFIG = {
-  chave: "15524498401",
-  nomeRecebedor: "ONG SEMPRE VIVA",
-  cidade: "RECIFE",
-};
-
-// Monta um campo TLV (Tag-Length-Value) do padrão BR Code (Pix estático).
-function pixTLV(id, valor) {
-  const tamanho = String(valor.length).padStart(2, "0");
-  return `${id}${tamanho}${valor}`;
-}
-
-// CRC16/CCITT-FALSE exigido no final do payload Pix.
-function pixCRC16(payload) {
-  let crc = 0xffff;
-  for (let i = 0; i < payload.length; i++) {
-    crc ^= payload.charCodeAt(i) << 8;
-    for (let j = 0; j < 8; j++) {
-      crc = (crc & 0x8000) !== 0 ? (crc << 1) ^ 0x1021 : crc << 1;
-      crc &= 0xffff;
-    }
-  }
-  return crc.toString(16).toUpperCase().padStart(4, "0");
-}
-
-// Gera o payload "copia e cola" de um QR Code Pix estático (sem valor fixo,
-// o doador informa o valor no próprio app do banco).
-function gerarPayloadPix({ chave, nomeRecebedor, cidade }) {
-  const merchantAccountInfo =
-    pixTLV("00", "br.gov.bcb.pix") + pixTLV("01", chave);
-
-  let payload = "";
-  payload += pixTLV("00", "01"); // Payload Format Indicator
-  payload += pixTLV("01", "11"); // QR estático e reutilizável
-  payload += pixTLV("26", merchantAccountInfo);
-  payload += pixTLV("52", "0000"); // Merchant Category Code
-  payload += pixTLV("53", "986"); // Moeda: Real (BRL)
-  payload += pixTLV("58", "BR");
-  payload += pixTLV("59", nomeRecebedor.substring(0, 25));
-  payload += pixTLV("60", cidade.substring(0, 15));
-  payload += pixTLV("62", pixTLV("05", "***")); // Identificador da transação
-
-  payload += "6304";
-  return payload + pixCRC16(payload);
-}
+// QR Code Pix estático (imagem gerada para a chave da ONG).
+// O arquivo qrcode_pix.png deve ficar na mesma pasta do index.html.
+const PIX_QR_IMAGEM = "qrcode_pix.png";
 
 const btnAbrirPix = document.getElementById("btn-abrir-pix");
 const pixPainel = document.getElementById("pix-painel");
 const pixFechar = document.getElementById("pix-fechar");
 const formPix = document.getElementById("form-pix");
 const pixQrcodeImg = document.getElementById("pix-qrcode-img");
+const pixQrcodeArea = document.getElementById("pix-qrcode-area");
+const btnGerarQr = document.getElementById("btn-gerar-qr");
+const btnConfirmarPix = document.getElementById("btn-confirmar-pix");
+const pixDica = document.getElementById("pix-dica");
 
-function atualizarQrCodePix() {
-  if (!pixQrcodeImg) return;
-  const payload = gerarPayloadPix(PIX_CONFIG);
-  const url =
-    "https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=" +
-    encodeURIComponent(payload);
-  pixQrcodeImg.src = url;
+function camposPixPreenchidos() {
+  if (!formPix) return false;
+  const dados = new FormData(formPix);
+  return ["nome", "cpf", "email"].every(
+    (campo) => String(dados.get(campo) || "").trim() !== "",
+  );
+}
+
+// Volta ao estado inicial: sem QR Code e sem o botão de confirmação.
+function esconderQrCodePix() {
+  if (pixQrcodeArea) pixQrcodeArea.hidden = true;
+  if (pixQrcodeImg) pixQrcodeImg.removeAttribute("src");
+  if (btnConfirmarPix) btnConfirmarPix.hidden = true;
+  if (btnGerarQr) btnGerarQr.hidden = false;
+}
+
+function atualizarEstadoPix() {
+  const preenchidos = camposPixPreenchidos();
+  if (btnGerarQr) btnGerarQr.disabled = !preenchidos;
+  if (pixDica) pixDica.hidden = preenchidos;
+  // Se o doador apagar algum campo depois de gerar, o QR Code some.
+  if (!preenchidos) esconderQrCodePix();
+}
+
+function gerarQrCodePix() {
+  if (!camposPixPreenchidos()) {
+    showNotification("Preencha todos os campos para gerar o QR Code.", "error");
+    return;
+  }
+
+  const dados = new FormData(formPix);
+  if (!cpfValido(String(dados.get("cpf")))) {
+    showNotification("CPF inválido. Confira os números digitados.", "error");
+    document.getElementById("pix-cpf")?.focus();
+    return;
+  }
+  if (!emailValido(String(dados.get("email")))) {
+    showNotification("Informe um e-mail válido.", "error");
+    document.getElementById("pix-email")?.focus();
+    return;
+  }
+
+  pixQrcodeImg.src = PIX_QR_IMAGEM;
+  pixQrcodeArea.hidden = false;
+  btnConfirmarPix.hidden = false;
+  btnGerarQr.hidden = true;
+  pixQrcodeArea.scrollIntoView({ behavior: "smooth", block: "nearest" });
 }
 
 function abrirPainelPix() {
   if (!pixPainel) return;
   pixPainel.hidden = false;
   btnAbrirPix?.setAttribute("aria-expanded", "true");
-  atualizarQrCodePix();
+  atualizarEstadoPix();
   document.getElementById("pix-nome")?.focus();
 }
 
@@ -307,6 +306,8 @@ function fecharPainelPix() {
   pixPainel.hidden = true;
   btnAbrirPix?.setAttribute("aria-expanded", "false");
   formPix?.reset();
+  esconderQrCodePix();
+  atualizarEstadoPix();
 }
 
 btnAbrirPix?.addEventListener("click", () => {
@@ -318,6 +319,8 @@ btnAbrirPix?.addEventListener("click", () => {
 });
 
 pixFechar?.addEventListener("click", fecharPainelPix);
+formPix?.addEventListener("input", atualizarEstadoPix);
+btnGerarQr?.addEventListener("click", gerarQrCodePix);
 
 document.addEventListener("keydown", (event) => {
   if (event.key === "Escape" && pixPainel?.hidden === false) {
@@ -352,6 +355,13 @@ function emailValido(email) {
 
 formPix?.addEventListener("submit", (event) => {
   event.preventDefault();
+
+  // Enter nos campos não pode pular a etapa de gerar o QR Code.
+  if (pixQrcodeArea?.hidden !== false) {
+    gerarQrCodePix();
+    return;
+  }
+
   const dados = new FormData(formPix);
   const nome = String(dados.get("nome") || "").trim();
   const cpf = String(dados.get("cpf") || "").trim();

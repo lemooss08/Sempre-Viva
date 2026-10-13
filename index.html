@@ -780,12 +780,15 @@
                                 <label for="pix-email">Email</label>
                                 <input id="pix-email" name="email" type="email" placeholder="seuemail@exemplo.com" autocomplete="email" required>
 
-                                <div class="pix-qrcode-area">
+                                <button type="button" class="btn-modal" id="btn-gerar-qr" disabled>Gerar QR Code</button>
+                                <p class="pix-dica" id="pix-dica">Preencha todos os campos para gerar o QR Code.</p>
+
+                                <div class="pix-qrcode-area" id="pix-qrcode-area" hidden>
                                     <img id="pix-qrcode-img" class="pix-qrcode-img" alt="QR Code Pix para doação à ONG Sempre Viva" width="200" height="200">
                                     <p class="pix-instrucao">Abra o app do seu banco, escolha pagar com <strong>Pix</strong> e escaneie o código acima para concluir sua doação.</p>
                                 </div>
 
-                                <button type="submit" class="btn-modal" id="btn-confirmar-pix">Já paguei, confirmar doação</button>
+                                <button type="submit" class="btn-modal" id="btn-confirmar-pix" hidden>Já paguei, confirmar doação!</button>
                             </form>
                         </div>
                     </div>

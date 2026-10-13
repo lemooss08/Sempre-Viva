@@ -5452,6 +5452,24 @@ section h2 > .ee-recuperar-btn-g { display: none !important; }
   margin-top: 20px;
 }
 
+.pix-form .btn-modal[hidden],
+.pix-qrcode-area[hidden],
+.pix-dica[hidden] {
+  display: none;
+}
+
+.pix-form .btn-modal:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.pix-dica {
+  font-size: 13px;
+  color: #777;
+  text-align: center;
+  margin: 6px 0 0;
+}
+
 body.dark-mode .pix-painel {
   background: #fff;
 }
