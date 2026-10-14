@@ -5482,3 +5482,525 @@ body.dark-mode .pix-painel {
     width: 170px;
     height: 170px;
   }
+}
+
+
+/* PATCH 0940 — menu único de edição */
+.ee-unified-opt { background: transparent !important; border: 0 !important; padding: 9px 10px !important; text-align: left !important; font: 600 12px Montserrat,sans-serif !important; color: #333 !important; cursor: pointer !important; border-radius: 5px !important; width: 100% !important; }
+.ee-unified-opt:hover { background: #f0fdf8 !important; color: #1abc9c !important; }
+.ee-unified-finish { border-top: 1px solid #e5e7eb !important; margin-top: 3px !important; }
+.ee-card-destination-modal { display: none; position: fixed; inset: 0; z-index: 99999; background: rgba(0,0,0,.35); align-items: center; justify-content: center; }
+.ee-card-destination-modal.ee-aberto { display: flex; }
+.ee-card-destination-box { width: min(360px, calc(100vw - 32px)); background: #fff; border-radius: 12px; padding: 20px; box-shadow: 0 12px 35px rgba(0,0,0,.25); font-family: Montserrat,sans-serif; }
+.ee-card-destination-box h3 { margin: 0 0 8px; color: #1abc9c; font-size: 17px; }
+.ee-card-destination-box p { margin: 0 0 14px; font-size: 12px; color: #555; }
+.ee-card-destination-options { display: grid; gap: 8px; }
+.ee-card-destination-options button, .ee-card-destination-close { border: 1px solid #1abc9c; background: #fff; color: #168f78; border-radius: 7px; padding: 10px; cursor: pointer; font: 600 12px Montserrat,sans-serif; }
+.ee-card-destination-options button:hover { background: #eafaf6; }
+.ee-card-destination-close { margin-top: 14px; border-color: #aaa; color: #555; width: 100%; }
+
+
+/* PATCH 0942 — símbolos somente após escolher uma opção */
+body.edit-mode-ativo:not(.global-modo-texto):not(.global-modo-fotos):not(.global-modo-ods) .ee-text-btn,
+body.edit-mode-ativo:not(.global-modo-texto):not(.global-modo-fotos):not(.global-modo-ods) .ee-recuperar-btn,
+body.edit-mode-ativo:not(.global-modo-texto):not(.global-modo-fotos):not(.global-modo-ods) .ee-cancel-text-btn,
+body.edit-mode-ativo:not(.global-modo-texto):not(.global-modo-fotos):not(.global-modo-ods) .ee-img-btn,
+body.edit-mode-ativo:not(.global-modo-texto):not(.global-modo-fotos):not(.global-modo-ods) .ee-img-btn-g,
+body.edit-mode-ativo:not(.global-modo-texto):not(.global-modo-fotos):not(.global-modo-ods) .ee-slide-remove,
+body.edit-mode-ativo:not(.global-modo-texto):not(.global-modo-fotos):not(.global-modo-ods) .ee-add-tile,
+body.edit-mode-ativo:not(.global-modo-texto):not(.global-modo-fotos):not(.global-modo-ods) .ee-team-text-controls,
+body.edit-mode-ativo:not(.global-modo-texto):not(.global-modo-fotos):not(.global-modo-ods) .ee-interview-title-controls,
+body.edit-mode-ativo:not(.global-modo-texto):not(.global-modo-fotos):not(.global-modo-ods) .ee-interview-text-plus,
+body.edit-mode-ativo:not(.global-modo-texto):not(.global-modo-fotos):not(.global-modo-ods) .ee-interview-text-restore,
+body.edit-mode-ativo:not(.global-modo-texto):not(.global-modo-fotos):not(.global-modo-ods) .ee-interview-text-cancel {
+  display: none !important;
+}
+/* Ao escolher texto, somente controles textuais são liberados. */
+body.edit-mode-ativo.global-modo-texto #nossa-equipe .ee-team-text-controls,
+body.edit-mode-ativo.global-modo-texto .ee-text-btn,
+body.edit-mode-ativo.global-modo-texto .ee-recuperar-btn,
+body.edit-mode-ativo.global-modo-texto .ee-cancel-text-btn,
+body.edit-mode-ativo.global-modo-texto .ee-interview-title-controls,
+body.edit-mode-ativo.global-modo-texto .ee-interview-text-plus,
+body.edit-mode-ativo.global-modo-texto .ee-interview-text-restore,
+body.edit-mode-ativo.global-modo-texto .ee-interview-text-cancel { display: flex !important; }
+/* Ao escolher imagens, somente controles de imagem ficam visíveis. */
+body.edit-mode-ativo.global-modo-fotos .ee-img-btn,
+body.edit-mode-ativo.global-modo-fotos .ee-img-btn-g,
+body.edit-mode-ativo.global-modo-fotos .ee-slide-remove,
+body.edit-mode-ativo.global-modo-fotos .ee-add-tile,
+body.edit-mode-ativo.global-modo-fotos .ee-entrevista-img-btn { display: flex !important; }
+/* PATCH 0942b — nenhum controle visual aparece antes da escolha */
+body.edit-mode-ativo:not(.global-modo-texto):not(.global-modo-fotos):not(.global-modo-ods) .ee-conjunto-btn,
+body.edit-mode-ativo:not(.global-modo-texto):not(.global-modo-fotos):not(.global-modo-ods) .ee-carrossel-btn,
+body.edit-mode-ativo:not(.global-modo-texto):not(.global-modo-fotos):not(.global-modo-ods) .ee-card-texto-btn,
+body.edit-mode-ativo:not(.global-modo-texto):not(.global-modo-fotos):not(.global-modo-ods) .ee-entrevistas-master-area,
+body.edit-mode-ativo:not(.global-modo-texto):not(.global-modo-fotos):not(.global-modo-ods) .ee-entrevista-img-btn,
+body.edit-mode-ativo:not(.global-modo-texto):not(.global-modo-fotos):not(.global-modo-ods) .ee-unified-photo-btn { display: none !important; }
+body.edit-mode-ativo.global-modo-texto .ee-conjunto-btn,
+body.edit-mode-ativo.global-modo-texto .ee-carrossel-btn,
+body.edit-mode-ativo.global-modo-texto .ee-card-texto-btn,
+body.edit-mode-ativo.global-modo-texto .ee-entrevistas-master-area { display: flex !important; }
+
+
+/* PATCH 0943 — modos de imagem e texto mutuamente exclusivos */
+/* Modo imagens: esconder absolutamente todos os controles textuais. */
+body.edit-mode-ativo.global-modo-fotos .ee-text-btn,
+body.edit-mode-ativo.global-modo-fotos .ee-recuperar-btn,
+body.edit-mode-ativo.global-modo-fotos .ee-cancel-text-btn,
+body.edit-mode-ativo.global-modo-fotos .ee-team-text-controls,
+body.edit-mode-ativo.global-modo-fotos .ee-interview-title-controls,
+body.edit-mode-ativo.global-modo-fotos .ee-interview-text-plus,
+body.edit-mode-ativo.global-modo-fotos .ee-interview-text-restore,
+body.edit-mode-ativo.global-modo-fotos .ee-interview-text-cancel,
+body.edit-mode-ativo.global-modo-fotos .ee-card-texto-btn,
+body.edit-mode-ativo.global-modo-fotos .ee-carrossel-texto,
+body.edit-mode-ativo.global-modo-fotos .ee-carrossel-texto-cancelar,
+body.edit-mode-ativo.global-modo-fotos .ee-entrevistas-master-area { display: none !important; }
+/* Modo texto: esconder absolutamente todos os controles de imagem. */
+body.edit-mode-ativo.global-modo-texto .ee-img-btn,
+body.edit-mode-ativo.global-modo-texto .ee-img-btn-g,
+body.edit-mode-ativo.global-modo-texto .ee-slide-remove,
+body.edit-mode-ativo.global-modo-texto .ee-add-tile,
+body.edit-mode-ativo.global-modo-texto .ee-unified-photo-btn,
+body.edit-mode-ativo.global-modo-texto .ee-entrevista-img-btn,
+body.edit-mode-ativo.global-modo-texto .ee-entrevista-img-menu,
+body.edit-mode-ativo.global-modo-texto .ee-carrossel-imagens,
+body.edit-mode-ativo.global-modo-texto .ee-carrossel-imagem-cancelar,
+body.edit-mode-ativo.global-modo-texto .ee-conjunto-imagem,
+body.edit-mode-ativo.global-modo-texto .ee-img-menu { display: none !important; }
+/* A equipe obedece ao mesmo isolamento, sem afetar outros blocos. */
+body.edit-mode-ativo.global-modo-fotos #nossa-equipe .ee-team-text-controls,
+body.edit-mode-ativo.global-modo-texto #nossa-equipe .ee-img-btn,
+body.edit-mode-ativo.global-modo-texto #nossa-equipe .ee-img-btn-g { display: none !important; }
+
+
+
+
+/* PATCH 0945 — modo Continuar editando card */
+body.edit-mode-ativo.ee-cards-edit-active .iniciativa-card,
+body.edit-mode-ativo.ee-cards-edit-active .card-entrevista,
+body.edit-mode-ativo.ee-cards-edit-active #nossa-equipe .equipe-item { position: relative !important; z-index: 200 !important; overflow: visible !important; }
+body.edit-mode-ativo.ee-cards-edit-active .iniciativa-card .ee-text-btn,
+body.edit-mode-ativo.ee-cards-edit-active .iniciativa-card .ee-recuperar-btn,
+body.edit-mode-ativo.ee-cards-edit-active .iniciativa-card .ee-cancel-text-btn,
+body.edit-mode-ativo.ee-cards-edit-active .iniciativa-card .ee-img-btn,
+body.edit-mode-ativo.ee-cards-edit-active .iniciativa-card .ee-img-btn-g,
+body.edit-mode-ativo.ee-cards-edit-active .iniciativa-card .ee-slide-remove,
+body.edit-mode-ativo.ee-cards-edit-active .iniciativa-card .ee-add-tile,
+body.edit-mode-ativo.ee-cards-edit-active .card-entrevista .ee-text-btn,
+body.edit-mode-ativo.ee-cards-edit-active .card-entrevista .ee-recuperar-btn,
+body.edit-mode-ativo.ee-cards-edit-active .card-entrevista .ee-cancel-text-btn,
+body.edit-mode-ativo.ee-cards-edit-active .card-entrevista .ee-img-btn,
+body.edit-mode-ativo.ee-cards-edit-active .card-entrevista .ee-entrevista-img-btn,
+body.edit-mode-ativo.ee-cards-edit-active #nossa-equipe .ee-team-text-controls,
+body.edit-mode-ativo.ee-cards-edit-active #nossa-equipe .ee-text-btn,
+body.edit-mode-ativo.ee-cards-edit-active #nossa-equipe .ee-recuperar-btn,
+body.edit-mode-ativo.ee-cards-edit-active #nossa-equipe .ee-cancel-text-btn,
+body.edit-mode-ativo.ee-cards-edit-active #nossa-equipe .ee-img-btn,
+body.edit-mode-ativo.ee-cards-edit-active #nossa-equipe .ee-img-btn-g { display: flex !important; visibility: visible !important; opacity: 1 !important; pointer-events: auto !important; }
+/* Fora dos cards, nada é liberado por este modo. */
+body.edit-mode-ativo.ee-cards-edit-active > .ee-text-btn,
+body.edit-mode-ativo.ee-cards-edit-active > .ee-img-btn { display: none !important; }
+
+
+/* PATCH 0952 — escopo final de Editar carrosséis
+   Áreas liberadas: Nosso Trabalho (pilares), Nossa Equipe, Entrevistas e Parcerias. */
+body.edit-mode-ativo.ee-cards-edit-active #nosso-trabalho,
+body.edit-mode-ativo.ee-cards-edit-active #nossa-equipe,
+body.edit-mode-ativo.ee-cards-edit-active #Entrevista,
+body.edit-mode-ativo.ee-cards-edit-active #parcerias { position: relative !important; overflow: visible !important; }
+body.edit-mode-ativo.ee-cards-edit-active #nosso-trabalho .iniciativa-card,
+body.edit-mode-ativo.ee-cards-edit-active #nossa-equipe .equipe-item,
+body.edit-mode-ativo.ee-cards-edit-active #Entrevista .card-entrevista,
+body.edit-mode-ativo.ee-cards-edit-active #parcerias .parceiro-item {
+  position: relative !important; z-index: 20 !important; overflow: visible !important;
+  transform: none !important; transition: none !important;
+}
+body.edit-mode-ativo.ee-cards-edit-active #nosso-trabalho .iniciativa-card:hover,
+body.edit-mode-ativo.ee-cards-edit-active #nossa-equipe .equipe-item:hover,
+body.edit-mode-ativo.ee-cards-edit-active #Entrevista .card-entrevista:hover,
+body.edit-mode-ativo.ee-cards-edit-active #parcerias .parceiro-item:hover {
+  transform: none !important; top: auto !important; margin-top: 0 !important;
+}
+body.edit-mode-ativo.ee-cards-edit-active #nosso-trabalho img,
+body.edit-mode-ativo.ee-cards-edit-active #nossa-equipe img,
+body.edit-mode-ativo.ee-cards-edit-active #Entrevista img,
+body.edit-mode-ativo.ee-cards-edit-active #parcerias img { transition: none !important; }
+body.edit-mode-ativo.ee-cards-edit-active #nosso-trabalho img:hover,
+body.edit-mode-ativo.ee-cards-edit-active #nossa-equipe img:hover,
+body.edit-mode-ativo.ee-cards-edit-active #Entrevista img:hover,
+body.edit-mode-ativo.ee-cards-edit-active #parcerias img:hover { transform: none !important; }
+/* Controles acima dos cards vizinhos e fora do fluxo visual. */
+body.edit-mode-ativo.ee-cards-edit-active #nosso-trabalho .ee-text-btn,
+body.edit-mode-ativo.ee-cards-edit-active #nosso-trabalho .ee-recuperar-btn,
+body.edit-mode-ativo.ee-cards-edit-active #nosso-trabalho .ee-cancel-text-btn,
+body.edit-mode-ativo.ee-cards-edit-active #nosso-trabalho .ee-img-btn,
+body.edit-mode-ativo.ee-cards-edit-active #nosso-trabalho .ee-img-btn-g,
+body.edit-mode-ativo.ee-cards-edit-active #nossa-equipe .ee-team-text-controls,
+body.edit-mode-ativo.ee-cards-edit-active #nossa-equipe .ee-img-btn,
+body.edit-mode-ativo.ee-cards-edit-active #nossa-equipe .ee-img-btn-g,
+body.edit-mode-ativo.ee-cards-edit-active #Entrevista .ee-interview-title-controls,
+body.edit-mode-ativo.ee-cards-edit-active #Entrevista .ee-interview-text-plus,
+body.edit-mode-ativo.ee-cards-edit-active #Entrevista .ee-interview-text-restore,
+body.edit-mode-ativo.ee-cards-edit-active #Entrevista .ee-interview-text-cancel,
+body.edit-mode-ativo.ee-cards-edit-active #Entrevista .ee-entrevista-img-btn,
+body.edit-mode-ativo.ee-cards-edit-active #parcerias .ee-text-btn,
+body.edit-mode-ativo.ee-cards-edit-active #parcerias .ee-recuperar-btn,
+body.edit-mode-ativo.ee-cards-edit-active #parcerias .ee-cancel-text-btn,
+body.edit-mode-ativo.ee-cards-edit-active #parcerias .ee-img-btn,
+body.edit-mode-ativo.ee-cards-edit-active #parcerias .ee-img-btn-g { z-index: 100000 !important; }
+/* ODS e as demais seções ficam fora deste modo. */
+body.edit-mode-ativo.ee-cards-edit-active .ee-conjunto-btn,
+body.edit-mode-ativo.ee-cards-edit-active .ee-conjunto-menu,
+body.edit-mode-ativo.ee-cards-edit-active .ods-master-btn,
+body.edit-mode-ativo.ee-cards-edit-active .ods-master-menu,
+body.edit-mode-ativo.ee-cards-edit-active .ods-card .ee-img-btn-g { display: none !important; }
+
+
+/* PATCH 0953 — controles específicos visíveis no modo Editar carrosséis */
+body.edit-mode-ativo.ee-cards-edit-active #nossa-equipe .ee-team-text-controls,
+body.edit-mode-ativo.ee-cards-edit-active #nossa-equipe .ee-img-btn-g,
+body.edit-mode-ativo.ee-cards-edit-active #Entrevista .ee-interview-title-controls,
+body.edit-mode-ativo.ee-cards-edit-active #Entrevista .ee-interview-text-plus,
+body.edit-mode-ativo.ee-cards-edit-active #Entrevista .ee-interview-text-restore,
+body.edit-mode-ativo.ee-cards-edit-active #Entrevista .ee-interview-text-cancel,
+body.edit-mode-ativo.ee-cards-edit-active #Entrevista .ee-entrevista-img-btn,
+body.edit-mode-ativo.ee-cards-edit-active #parcerias .ee-text-btn-g,
+body.edit-mode-ativo.ee-cards-edit-active #parcerias .ee-recuperar-btn-g,
+body.edit-mode-ativo.ee-cards-edit-active #parcerias .ee-cancel-text-btn,
+body.edit-mode-ativo.ee-cards-edit-active #parcerias .ee-img-btn-g {
+  display: flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  pointer-events: auto !important;
+}
+body.edit-mode-ativo.ee-cards-edit-active #nossa-equipe .ee-team-text-controls button,
+body.edit-mode-ativo.ee-cards-edit-active #Entrevista .ee-interview-title-controls button { pointer-events: auto !important; }
+
+
+/* PATCH 0954 — escopo dos símbolos conforme solicitado */
+/* Tudo começa oculto dentro dos três modos e é liberado somente por área. */
+body.edit-mode-ativo.global-modo-fotos .ee-img-btn,
+body.edit-mode-ativo.global-modo-fotos .ee-img-btn-g,
+body.edit-mode-ativo.global-modo-fotos .ee-hero-img-btn { display: none !important; }
+body.edit-mode-ativo.global-modo-texto .ee-text-btn,
+body.edit-mode-ativo.global-modo-texto .ee-text-btn-g,
+body.edit-mode-ativo.global-modo-texto .ee-recuperar-btn,
+body.edit-mode-ativo.global-modo-texto .ee-recuperar-btn-g,
+body.edit-mode-ativo.global-modo-texto .ee-cancel-text-btn,
+body.edit-mode-ativo.global-modo-texto .ee-team-text-controls,
+body.edit-mode-ativo.global-modo-texto .ee-interview-title-controls,
+body.edit-mode-ativo.global-modo-texto .ee-interview-text-plus,
+body.edit-mode-ativo.global-modo-texto .ee-interview-text-restore,
+body.edit-mode-ativo.global-modo-texto .ee-interview-text-cancel { display: none !important; }
+
+/* Editar imagens: Sobre a ONG, Nosso Mascote e imagem de abertura. */
+body.edit-mode-ativo.global-modo-fotos #sobre .ee-img-btn,
+body.edit-mode-ativo.global-modo-fotos #mascote .ee-img-btn,
+body.edit-mode-ativo.global-modo-fotos #inicio .ee-hero-img-btn { display: flex !important; }
+body.edit-mode-ativo.global-modo-fotos #sobre .ee-img-btn,
+body.edit-mode-ativo.global-modo-fotos #mascote .ee-img-btn { z-index: 10000 !important; }
+.ee-hero-img-btn {
+  display: none; position: absolute; top: 86px; right: 24px; width: 25px; height: 25px;
+  align-items: center; justify-content: center; border: 1px solid #1abc9c; border-radius: 6px;
+  background: #fff; color: #1abc9c; font: 800 18px/1 sans-serif; cursor: pointer; z-index: 10000;
+}
+.ee-hero-img-menu {
+  display: none; position: absolute; top: 116px; right: 24px; min-width: 175px; padding: 5px;
+  background: #fff; border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 5px 18px rgba(0,0,0,.18); z-index: 10001;
+}
+.ee-hero-img-menu.ee-aberto { display: flex; flex-direction: column; }
+.ee-hero-img-menu button { border: 0; background: #fff; padding: 8px 10px; text-align: left; cursor: pointer; }
+.ee-hero-img-menu button:hover { background: #f0fdf8; }
+
+/* Editar texto: somente os textos fora dos carrosséis e dos quadrados de parceria. */
+body.edit-mode-ativo.global-modo-texto #inicio .ee-text-btn,
+body.edit-mode-ativo.global-modo-texto #inicio .ee-recuperar-btn,
+body.edit-mode-ativo.global-modo-texto #inicio .ee-cancel-text-btn,
+body.edit-mode-ativo.global-modo-texto #sobre .ee-text-btn,
+body.edit-mode-ativo.global-modo-texto #sobre .ee-recuperar-btn,
+body.edit-mode-ativo.global-modo-texto #sobre .ee-cancel-text-btn,
+body.edit-mode-ativo.global-modo-texto #mascote .ee-text-btn,
+body.edit-mode-ativo.global-modo-texto #mascote .ee-recuperar-btn,
+body.edit-mode-ativo.global-modo-texto #mascote .ee-cancel-text-btn,
+body.edit-mode-ativo.global-modo-texto #Nosso\ impacto .ee-text-btn,
+body.edit-mode-ativo.global-modo-texto #Nosso\ impacto .ee-recuperar-btn,
+body.edit-mode-ativo.global-modo-texto #Nosso\ impacto .ee-cancel-text-btn,
+body.edit-mode-ativo.global-modo-texto #missao-e-valores .ee-text-btn,
+body.edit-mode-ativo.global-modo-texto #missao-e-valores .ee-recuperar-btn,
+body.edit-mode-ativo.global-modo-texto #missao-e-valores .ee-cancel-text-btn,
+body.edit-mode-ativo.global-modo-texto #certificacoes .ee-text-btn,
+body.edit-mode-ativo.global-modo-texto #certificacoes .ee-recuperar-btn,
+body.edit-mode-ativo.global-modo-texto #certificacoes .ee-cancel-text-btn,
+body.edit-mode-ativo.global-modo-texto #transparencia .ee-text-btn,
+body.edit-mode-ativo.global-modo-texto #transparencia .ee-recuperar-btn,
+body.edit-mode-ativo.global-modo-texto #transparencia .ee-cancel-text-btn,
+body.edit-mode-ativo.global-modo-texto #acoes .ee-text-btn,
+body.edit-mode-ativo.global-modo-texto #acoes .ee-recuperar-btn,
+body.edit-mode-ativo.global-modo-texto #acoes .ee-cancel-text-btn,
+body.edit-mode-ativo.global-modo-texto #eventos .ee-text-btn,
+body.edit-mode-ativo.global-modo-texto #eventos .ee-recuperar-btn,
+body.edit-mode-ativo.global-modo-texto #eventos .ee-cancel-text-btn,
+body.edit-mode-ativo.global-modo-texto #seja-voluntario .ee-text-btn,
+body.edit-mode-ativo.global-modo-texto #seja-voluntario .ee-recuperar-btn,
+body.edit-mode-ativo.global-modo-texto #seja-voluntario .ee-cancel-text-btn,
+body.edit-mode-ativo.global-modo-texto #parcerias > .container > *:not(.parcerias-galeria) .ee-text-btn,
+body.edit-mode-ativo.global-modo-texto #parcerias > .container > *:not(.parcerias-galeria) .ee-recuperar-btn,
+body.edit-mode-ativo.global-modo-texto #parcerias > .container > *:not(.parcerias-galeria) .ee-cancel-text-btn,
+body.edit-mode-ativo.global-modo-texto #contato .ee-text-btn,
+body.edit-mode-ativo.global-modo-texto #contato .ee-recuperar-btn,
+body.edit-mode-ativo.global-modo-texto #contato .ee-cancel-text-btn,
+body.edit-mode-ativo.global-modo-texto footer .ee-text-btn,
+body.edit-mode-ativo.global-modo-texto footer .ee-recuperar-btn,
+body.edit-mode-ativo.global-modo-texto footer .ee-cancel-text-btn { display: flex !important; }
+
+/* Equipe: texto permitido somente na introdução, não nos cards do carrossel. */
+body.edit-mode-ativo.global-modo-texto #nossa-equipe > .container > *:not(.equipe-wrapper) .ee-text-btn,
+body.edit-mode-ativo.global-modo-texto #nossa-equipe > .container > *:not(.equipe-wrapper) .ee-recuperar-btn,
+body.edit-mode-ativo.global-modo-texto #nossa-equipe > .container > *:not(.equipe-wrapper) .ee-cancel-text-btn { display: flex !important; }
+body.edit-mode-ativo.global-modo-texto #nossa-equipe .equipe-item .ee-team-text-controls,
+body.edit-mode-ativo.global-modo-texto #nossa-equipe .equipe-item .ee-text-btn,
+body.edit-mode-ativo.global-modo-texto #nossa-equipe .equipe-item .ee-recuperar-btn,
+body.edit-mode-ativo.global-modo-texto #nossa-equipe .equipe-item .ee-cancel-text-btn { display: none !important; }
+
+/* Conteúdos textuais pedidos no rodapé. */
+body.edit-mode-ativo.global-modo-texto footer .ee-text-btn-g,
+body.edit-mode-ativo.global-modo-texto footer .ee-recuperar-btn-g,
+body.edit-mode-ativo.global-modo-texto footer .ee-cancel-text-btn { display: flex !important; }
+
+/* Editar carrosséis: ODS, equipe, entrevistas, Nosso Trabalho e quadrados de parcerias. */
+body.edit-mode-ativo.ee-cards-edit-active .ods-container .ee-img-btn-g,
+body.edit-mode-ativo.ee-cards-edit-active .ods-container .ee-text-btn-g,
+body.edit-mode-ativo.ee-cards-edit-active .ods-container .ee-recuperar-btn-g,
+body.edit-mode-ativo.ee-cards-edit-active .ods-container .ee-cancel-text-btn,
+body.edit-mode-ativo.ee-cards-edit-active #nosso-trabalho .ee-img-btn,
+body.edit-mode-ativo.ee-cards-edit-active #nosso-trabalho .ee-text-btn,
+body.edit-mode-ativo.ee-cards-edit-active #nosso-trabalho .ee-recuperar-btn,
+body.edit-mode-ativo.ee-cards-edit-active #nosso-trabalho .ee-cancel-text-btn,
+body.edit-mode-ativo.ee-cards-edit-active #nossa-equipe .ee-img-btn-g,
+body.edit-mode-ativo.ee-cards-edit-active #nossa-equipe .ee-team-text-controls,
+body.edit-mode-ativo.ee-cards-edit-active #Entrevista .ee-entrevista-img-btn,
+body.edit-mode-ativo.ee-cards-edit-active #Entrevista .ee-interview-title-controls,
+body.edit-mode-ativo.ee-cards-edit-active #Entrevista .ee-interview-text-plus,
+body.edit-mode-ativo.ee-cards-edit-active #Entrevista .ee-interview-text-restore,
+body.edit-mode-ativo.ee-cards-edit-active #Entrevista .ee-interview-text-cancel,
+body.edit-mode-ativo.ee-cards-edit-active #parcerias .parceiro-item .ee-img-btn-g,
+body.edit-mode-ativo.ee-cards-edit-active #parcerias .parceiro-item .ee-text-btn-g,
+body.edit-mode-ativo.ee-cards-edit-active #parcerias .parceiro-item .ee-recuperar-btn-g,
+body.edit-mode-ativo.ee-cards-edit-active #parcerias .parceiro-item .ee-cancel-text-btn { display: flex !important; visibility: visible !important; opacity: 1 !important; pointer-events: auto !important; }
+/* Nenhum símbolo de edição de carrossel fica fora das áreas pedidas. */
+body.edit-mode-ativo.ee-cards-edit-active #nossa-equipe > .ee-text-btn,
+body.edit-mode-ativo.ee-cards-edit-active #parcerias > .ee-text-btn,
+body.edit-mode-ativo.ee-cards-edit-active .ee-hero-img-btn { display: none !important; }
+
+
+/* PATCH 0955 — impedir controles de cards nos modos gerais */
+body.edit-mode-ativo.global-modo-fotos .ee-img-btn-g,
+body.edit-mode-ativo.global-modo-fotos .ee-entrevista-img-btn { display: none !important; }
+body.edit-mode-ativo.global-modo-texto .ee-text-btn-g,
+body.edit-mode-ativo.global-modo-texto .ee-recuperar-btn-g,
+body.edit-mode-ativo.global-modo-texto .ee-team-text-controls,
+body.edit-mode-ativo.global-modo-texto .ee-interview-title-controls,
+body.edit-mode-ativo.global-modo-texto .ee-interview-text-plus,
+body.edit-mode-ativo.global-modo-texto .ee-interview-text-restore,
+body.edit-mode-ativo.global-modo-texto .ee-interview-text-cancel { display: none !important; }
+/* O modo cards reabre exclusivamente os controles das áreas indicadas. */
+body.edit-mode-ativo.ee-cards-edit-active .ods-card .ee-img-btn-g,
+body.edit-mode-ativo.ee-cards-edit-active .ods-card .ee-text-btn-g,
+body.edit-mode-ativo.ee-cards-edit-active .ods-card .ee-recuperar-btn-g,
+body.edit-mode-ativo.ee-cards-edit-active .ods-card .ee-cancel-text-btn { display: flex !important; }
+
+
+/* PATCH 0956 — no contato, liberar apenas os três lemas fora do formulário */
+body.edit-mode-ativo.global-modo-texto #contato .contact-layout .ee-text-btn,
+body.edit-mode-ativo.global-modo-texto #contato .contact-layout .ee-recuperar-btn,
+body.edit-mode-ativo.global-modo-texto #contato .contact-layout .ee-cancel-text-btn,
+body.edit-mode-ativo.global-modo-texto #contato > .container .ee-text-btn,
+body.edit-mode-ativo.global-modo-texto #contato > .container .ee-recuperar-btn,
+body.edit-mode-ativo.global-modo-texto #contato > .container .ee-cancel-text-btn { display: none !important; }
+body.edit-mode-ativo.global-modo-texto #contato > p .ee-text-btn,
+body.edit-mode-ativo.global-modo-texto #contato > p .ee-recuperar-btn,
+body.edit-mode-ativo.global-modo-texto #contato > p .ee-cancel-text-btn { display: flex !important; }
+
+
+/* PATCH 0957 — Editar texto/imagens também inclui os carrosséis */
+body.edit-mode-ativo.global-modo-texto #nosso-trabalho .ee-text-btn,
+body.edit-mode-ativo.global-modo-texto #nosso-trabalho .ee-recuperar-btn,
+body.edit-mode-ativo.global-modo-texto #nosso-trabalho .ee-cancel-text-btn,
+body.edit-mode-ativo.global-modo-texto #nosso-trabalho .ee-text-btn-g,
+body.edit-mode-ativo.global-modo-texto #nosso-trabalho .ee-recuperar-btn-g,
+body.edit-mode-ativo.global-modo-texto #nossa-equipe .ee-team-text-controls,
+body.edit-mode-ativo.global-modo-texto #Entrevista .ee-interview-title-controls,
+body.edit-mode-ativo.global-modo-texto #Entrevista .ee-interview-text-plus,
+body.edit-mode-ativo.global-modo-texto #Entrevista .ee-interview-text-restore,
+body.edit-mode-ativo.global-modo-texto #Entrevista .ee-interview-text-cancel,
+body.edit-mode-ativo.global-modo-texto #parcerias .parceiro-item .ee-text-btn-g,
+body.edit-mode-ativo.global-modo-texto #parcerias .parceiro-item .ee-recuperar-btn-g,
+body.edit-mode-ativo.global-modo-texto #parcerias .parceiro-item .ee-cancel-text-btn,
+body.edit-mode-ativo.global-modo-fotos #nosso-trabalho .ee-img-btn,
+body.edit-mode-ativo.global-modo-fotos #nosso-trabalho .ee-img-btn-g,
+body.edit-mode-ativo.global-modo-fotos #nossa-equipe .ee-img-btn,
+body.edit-mode-ativo.global-modo-fotos #nossa-equipe .ee-img-btn-g,
+body.edit-mode-ativo.global-modo-fotos #Entrevista .ee-entrevista-img-btn,
+body.edit-mode-ativo.global-modo-fotos #Entrevista .ee-img-btn,
+body.edit-mode-ativo.global-modo-fotos #Entrevista .ee-img-btn-g,
+body.edit-mode-ativo.global-modo-fotos #parcerias .parceiro-item .ee-img-btn,
+body.edit-mode-ativo.global-modo-fotos #parcerias .parceiro-item .ee-img-btn-g {
+  display: flex !important; visibility: visible !important; opacity: 1 !important;
+  pointer-events: auto !important; z-index: 100000 !important;
+}
+body.edit-mode-ativo.global-modo-texto #nosso-trabalho .iniciativa-card,
+body.edit-mode-ativo.global-modo-fotos #nosso-trabalho .iniciativa-card,
+body.edit-mode-ativo.global-modo-texto #nossa-equipe .equipe-item,
+body.edit-mode-ativo.global-modo-fotos #nossa-equipe .equipe-item,
+body.edit-mode-ativo.global-modo-texto #Entrevista .card-entrevista,
+body.edit-mode-ativo.global-modo-fotos #Entrevista .card-entrevista,
+body.edit-mode-ativo.global-modo-texto #parcerias .parceiro-item,
+body.edit-mode-ativo.global-modo-fotos #parcerias .parceiro-item {
+  position: relative !important; overflow: visible !important; transform: none !important; transition: none !important;
+}
+body.edit-mode-ativo.global-modo-texto #nosso-trabalho .iniciativa-card:hover,
+body.edit-mode-ativo.global-modo-fotos #nosso-trabalho .iniciativa-card:hover,
+body.edit-mode-ativo.global-modo-texto #nossa-equipe .equipe-item:hover,
+body.edit-mode-ativo.global-modo-fotos #nossa-equipe .equipe-item:hover,
+body.edit-mode-ativo.global-modo-texto #Entrevista .card-entrevista:hover,
+body.edit-mode-ativo.global-modo-fotos #Entrevista .card-entrevista:hover,
+body.edit-mode-ativo.global-modo-texto #parcerias .parceiro-item:hover,
+body.edit-mode-ativo.global-modo-fotos #parcerias .parceiro-item:hover { transform: none !important; top: auto !important; margin-top: 0 !important; }
+body.edit-mode-ativo.global-modo-texto .ods-card .ee-text-btn-g,
+body.edit-mode-ativo.global-modo-texto .ods-card .ee-recuperar-btn-g,
+body.edit-mode-ativo.global-modo-texto .ods-card .ee-cancel-text-btn,
+body.edit-mode-ativo.global-modo-fotos .ods-card .ee-img-btn-g { display: none !important; }
+
+
+/* PATCH 0958 — controles de texto da equipe não ficam atrás dos cards seguintes */
+body.edit-mode-ativo.global-modo-texto #nossa-equipe,
+body.edit-mode-ativo.global-modo-texto #nossa-equipe .container,
+body.edit-mode-ativo.global-modo-texto #nossa-equipe .equipe-carousel,
+body.edit-mode-ativo.global-modo-texto #nossa-equipe .equipe-track,
+body.edit-mode-ativo.global-modo-texto #nossa-equipe .equipe-secao,
+body.edit-mode-ativo.global-modo-texto #nossa-equipe .equipe-secao-cards {
+  overflow: visible !important;
+}
+body.edit-mode-ativo.global-modo-texto #nossa-equipe .equipe-item {
+  position: relative !important;
+  overflow: visible !important;
+  transform: none !important;
+}
+/* Cards anteriores ficam acima dos posteriores apenas para os próprios controles. */
+body.edit-mode-ativo.global-modo-texto #nossa-equipe .equipe-item:nth-child(1) { z-index: 1004 !important; }
+body.edit-mode-ativo.global-modo-texto #nossa-equipe .equipe-item:nth-child(2) { z-index: 1003 !important; }
+body.edit-mode-ativo.global-modo-texto #nossa-equipe .equipe-item:nth-child(3) { z-index: 1002 !important; }
+body.edit-mode-ativo.global-modo-texto #nossa-equipe .equipe-item:nth-child(4) { z-index: 1001 !important; }
+body.edit-mode-ativo.global-modo-texto #nossa-equipe .equipe-item:nth-child(n+5) { z-index: 1000 !important; }
+body.edit-mode-ativo.global-modo-texto #nossa-equipe .ee-team-text-controls {
+  display: flex !important;
+  position: absolute !important;
+  right: 4px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  z-index: 100000 !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  pointer-events: auto !important;
+  white-space: nowrap !important;
+}
+body.edit-mode-ativo.global-modo-texto #nossa-equipe .ee-team-text-controls button {
+  position: relative !important;
+  z-index: 100001 !important;
+  pointer-events: auto !important;
+}
+/* Reserva espaço para os símbolos sem mover a imagem nem o card. */
+body.edit-mode-ativo.global-modo-texto #nossa-equipe .equipe-nome,
+body.edit-mode-ativo.global-modo-texto #nossa-equipe .equipe-cargo {
+  position: relative !important;
+  overflow: visible !important;
+  padding-right: 78px !important;
+}
+
+
+/* PATCH 0959 — nomes/cargos centralizados e controles fora do texto */
+body.edit-mode-ativo.global-modo-texto #nossa-equipe .equipe-nome,
+body.edit-mode-ativo.global-modo-texto #nossa-equipe .equipe-cargo {
+  width: 100% !important;
+  box-sizing: border-box !important;
+  padding-left: 8px !important;
+  padding-right: 8px !important;
+  text-align: center !important;
+  white-space: normal !important;
+}
+/* Os símbolos ficam fora da faixa escrita, à direita do card. */
+body.edit-mode-ativo.global-modo-texto #nossa-equipe .equipe-nome .ee-team-text-controls,
+body.edit-mode-ativo.global-modo-texto #nossa-equipe .equipe-cargo .ee-team-text-controls {
+  left: calc(100% + 7px) !important;
+  right: auto !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  width: max-content !important;
+  padding: 2px !important;
+  white-space: nowrap !important;
+}
+/* O bloco de controles não participa do alinhamento nem da largura do texto. */
+body.edit-mode-ativo.global-modo-texto #nossa-equipe .ee-team-text-controls {
+  margin: 0 !important;
+  text-align: initial !important;
+}
+
+
+/* PATCH 0960 — controles da equipe em faixa própria, abaixo do texto */
+body.edit-mode-ativo.global-modo-texto #nossa-equipe .equipe-nome .ee-team-text-controls,
+body.edit-mode-ativo.global-modo-texto #nossa-equipe .equipe-cargo .ee-team-text-controls {
+  left: 50% !important;
+  right: auto !important;
+  width: max-content !important;
+  min-width: 70px !important;
+  justify-content: center !important;
+  transform: translateX(-50%) !important;
+  padding: 2px !important;
+  margin: 0 !important;
+  background: rgba(255,255,255,.96) !important;
+  border-radius: 5px !important;
+  box-shadow: 0 2px 6px rgba(0,0,0,.14) !important;
+}
+/* Uma faixa abaixo de cada linha, sem entrar na área das palavras. */
+body.edit-mode-ativo.global-modo-texto #nossa-equipe .equipe-nome .ee-team-text-controls {
+  top: calc(100% + 2px) !important;
+}
+body.edit-mode-ativo.global-modo-texto #nossa-equipe .equipe-cargo .ee-team-text-controls {
+  top: calc(100% + 2px) !important;
+}
+/* Os cards continuam com largura/altura originais; os símbolos ficam fora do fluxo. */
+body.edit-mode-ativo.global-modo-texto #nossa-equipe .equipe-nome,
+body.edit-mode-ativo.global-modo-texto #nossa-equipe .equipe-cargo {
+  overflow: visible !important;
+  text-align: center !important;
+  padding-left: 8px !important;
+  padding-right: 8px !important;
+}
+
+
+/* PATCH 0961 — um único fluxo: remover botões independentes dos carrosséis */
+/* Os modos Editar texto/Editar imagens continuam usando seus símbolos internos. */
+.ee-carrossel-btn,
+.ee-carrossel-menu,
+.ee-grupo-btn,
+.ee-grupo-menu,
+.ee-entrevistas-master-area,
+.ee-entrevistas-menu,
+.ee-conjunto-btn,
+.ee-conjunto-menu,
+.ee-card-texto-btn,
+.ee-unified-photo-btn,
+.ee-ods-master-btn,
+.ee-ods-master-menu {
+  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+/* O menu estrutural continua sendo acessado apenas pelo menu unificado. */
+#ee-painel-local-dropdown [data-unified-mode="cards"] {
+  display: flex !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+}

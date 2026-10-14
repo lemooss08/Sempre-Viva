@@ -3753,6 +3753,7 @@ function openTransparenciaTab(evt, tabName) {
   });
 
   function atualizar() {
+    if (window.__eeClosingEditor) return;
     const mostrar = document.body.classList.contains('edit-mode-ativo') && document.body.classList.contains('global-modo-texto');
     alvos.forEach(el => {
       const box=el.querySelector('.ee-team-text-controls');
@@ -3773,6 +3774,7 @@ function openTransparenciaTab(evt, tabName) {
   if (!equipe) return;
   const controles = () => equipe.querySelectorAll('.ee-team-text-controls');
   function mostrar() {
+    if (window.__eeClosingEditor) return;
     equipe.classList.add('ee-team-text-active');
     controles().forEach(box => {
       box.style.setProperty('display', 'flex', 'important');
@@ -3812,6 +3814,7 @@ function openTransparenciaTab(evt, tabName) {
 // ============================================================
 (function () {
   function limparTitulos() {
+    if (window.__eeClosingEditor) return;
     document.querySelectorAll('section h1, section h2').forEach(titulo => {
       titulo.querySelectorAll(':scope > .ee-text-btn, :scope > .ee-recuperar-btn, :scope > .ee-cancel-text-btn, :scope > .ee-text-btn-g, :scope > .ee-recuperar-btn-g').forEach(btn => btn.remove());
       titulo.classList.remove('ee-editavel', 'ee-conjunto-texto');
@@ -3820,4 +3823,152 @@ function openTransparenciaTab(evt, tabName) {
   }
   limparTitulos();
   new MutationObserver(limparTitulos).observe(document.body, { childList: true, subtree: true });
+})();
+
+
+// ============================================================
+// PATCH 0940 — MENU ÚNICO DE EDIÇÃO DO SITE
+// ============================================================
+(function () {
+  const trigger = document.querySelector('.ee-secao-panel-trigger');
+  const menu = document.getElementById('ee-painel-local-dropdown');
+  if (!trigger || !menu || menu.dataset.eeUnifiedMenu) return;
+  menu.dataset.eeUnifiedMenu = '1';
+  menu.innerHTML = `
+    <div class="ee-panel-title">Opções de edição</div>
+    <button type="button" class="ee-unified-opt" data-unified-mode="fotos">📸 Editar imagens</button>
+    <button type="button" class="ee-unified-opt" data-unified-mode="texto">✍️ Editar texto</button>
+    <button type="button" class="ee-unified-opt" data-unified-mode="cards">▦ Adicionar/remover carrossel</button>
+    <button type="button" class="ee-unified-opt ee-unified-finish">✓ Concluir tarefa</button>
+  `;
+  function limparModos() {
+    document.body.classList.remove('global-modo-texto','global-modo-fotos','global-modo-ods');
+  }
+  function abrirEscolhaCards() {
+    let modal = document.getElementById('ee-card-destination-modal');
+    if (!modal) {
+      modal = document.createElement('div');
+      modal.id = 'ee-card-destination-modal';
+      modal.className = 'ee-card-destination-modal';
+      modal.innerHTML = `<div class="ee-card-destination-box"><h3>Onde você quer adicionar o card?</h3><p>Escolha a seção que receberá o novo card.</p><div class="ee-card-destination-options"></div><button type="button" class="ee-card-destination-close">Cancelar</button></div>`;
+      document.body.appendChild(modal);
+      modal.querySelector('.ee-card-destination-close').onclick = () => modal.remove();
+    }
+    const area = modal.querySelector('.ee-card-destination-options');
+    area.innerHTML = '';
+    const destinos = [
+      ['Carrosséis de iniciativas', '.iniciativa-card'],
+      ['Nossa equipe', '#nossa-equipe .equipe-item'],
+      ['Entrevistas', '.card-entrevista']
+    ];
+    destinos.forEach(([nome, seletor]) => {
+      const b=document.createElement('button'); b.type='button'; b.textContent=nome;
+      b.onclick=()=>{ modal.remove(); window.eeCardDestination=seletor; if(typeof window.showNotification==='function') window.showNotification('Destino selecionado: '+nome, 'success'); };
+      area.appendChild(b);
+    });
+    modal.classList.add('ee-aberto');
+  }
+  menu.addEventListener('click', e => {
+    const btn=e.target.closest('.ee-unified-opt'); if(!btn) return;
+    e.preventDefault(); e.stopPropagation();
+    if(btn.classList.contains('ee-unified-finish')) {
+      limparModos(); menu.classList.remove('ee-aberto'); trigger.textContent='⚙️ Personalizar Cards'; return;
+    }
+    const mode=btn.dataset.unifiedMode;
+    if(mode==='cards') { menu.classList.remove('ee-aberto'); abrirEscolhaCards(); return; }
+    limparModos();
+    document.body.classList.add(mode==='fotos'?'global-modo-fotos':'global-modo-texto');
+    trigger.textContent=mode==='fotos'?'📸 Editar imagens':'✍️ Editar texto';
+    menu.classList.remove('ee-aberto');
+  });
+})();
+
+
+
+
+// ============================================================
+// PATCH 0947 — FECHAMENTO PRIORITÁRIO SEM LOOP
+// ============================================================
+(function () {
+  const btn=document.getElementById('btn-editar-site');
+  if(!btn || btn.dataset.eeClosePriority) return;
+  btn.dataset.eeClosePriority='1';
+  document.addEventListener('click', e => {
+    if(e.target !== btn && !e.target.closest('#btn-editar-site')) return;
+    if(!btn.classList.contains('ativo')) return;
+    window.__eeClosingEditor=true;
+    const body=document.body;
+    body.classList.remove('global-modo-texto','global-modo-fotos','global-modo-ods','ee-cards-edit-active','ee-visual-controls-closed');
+    document.querySelectorAll('[contenteditable="true"]').forEach(el=>el.setAttribute('contenteditable','false'));
+    document.querySelectorAll('.ee-secao-dropdown-box, .ee-img-menu, .ee-carrossel-menu, .ee-grupo-menu, .ee-entrevista-img-menu').forEach(el=>el.classList.remove('ee-aberto'));
+    document.querySelectorAll('.ee-card-destination-modal, .ee-photo-choice-modal').forEach(el=>el.remove());
+    document.querySelectorAll('.ee-carrossel-texto-ativo, .ee-carrossel-imagem-ativo, .ee-team-text-active, .ee-entrevistas-texto-ativo, .ee-entrevistas-imagem-ativo').forEach(el=>el.classList.remove('ee-carrossel-texto-ativo','ee-carrossel-imagem-ativo','ee-team-text-active','ee-entrevistas-texto-ativo','ee-entrevistas-imagem-ativo'));
+    setTimeout(()=>{ window.__eeClosingEditor=false; },120);
+  }, true);
+})();
+
+/* PATCH 0954 — escopo solicitado dos símbolos de edição */
+(function () {
+  const hero = document.querySelector('#inicio.hero');
+  if (!hero || hero.dataset.eeHeroImageInit) return;
+  hero.dataset.eeHeroImageInit = '1';
+
+  const key = 'ee-hero-background';
+  const original = getComputedStyle(hero).backgroundImage;
+  hero.dataset.eeHeroOriginal = original;
+
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.className = 'ee-hero-img-btn';
+  button.textContent = '+';
+  button.setAttribute('aria-label', 'Editar imagem inicial');
+  button.title = 'Editar imagem inicial';
+
+  const menu = document.createElement('div');
+  menu.className = 'ee-hero-img-menu';
+  menu.innerHTML = '<button type="button" class="ee-hero-add">Adicionar imagem</button>' +
+    '<button type="button" class="ee-hero-restore">↺ Restaurar imagem</button>' +
+    '<button type="button" class="ee-hero-remove">Excluir imagem</button>' +
+    '<button type="button" class="ee-hero-cancel">− Não vou editar</button>';
+  const input = document.createElement('input');
+  input.type = 'file';
+  input.accept = 'image/*';
+  input.hidden = true;
+  hero.append(button, menu, input);
+
+  const saved = localStorage.getItem(key);
+  if (saved) hero.style.backgroundImage = `linear-gradient(rgba(0,0,0,.5),rgba(0,0,0,.5)), url("${saved}")`;
+
+  button.addEventListener('click', (e) => {
+    e.preventDefault(); e.stopPropagation();
+    menu.classList.toggle('ee-aberto');
+  });
+  menu.querySelector('.ee-hero-add').addEventListener('click', (e) => { e.stopPropagation(); input.click(); });
+  menu.querySelector('.ee-hero-restore').addEventListener('click', (e) => {
+    e.stopPropagation();
+    localStorage.removeItem(key);
+    hero.style.backgroundImage = hero.dataset.eeHeroOriginal || '';
+    menu.classList.remove('ee-aberto');
+  });
+  menu.querySelector('.ee-hero-remove').addEventListener('click', (e) => {
+    e.stopPropagation();
+    hero.style.backgroundImage = 'linear-gradient(rgba(0,0,0,.5),rgba(0,0,0,.5))';
+    localStorage.removeItem(key);
+    menu.classList.remove('ee-aberto');
+  });
+  menu.querySelector('.ee-hero-cancel').addEventListener('click', (e) => {
+    e.stopPropagation(); menu.classList.remove('ee-aberto');
+  });
+  input.addEventListener('change', () => {
+    const file = input.files && input.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const src = event.target.result;
+      hero.style.backgroundImage = `linear-gradient(rgba(0,0,0,.5),rgba(0,0,0,.5)), url("${src}")`;
+      try { localStorage.setItem(key, src); } catch (_) {}
+      menu.classList.remove('ee-aberto');
+    };
+    reader.readAsDataURL(file);
+  });
 })();
